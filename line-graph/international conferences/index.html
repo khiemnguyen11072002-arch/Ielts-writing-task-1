@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS Writing Task 1 – International conferences</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--bg:#f7f7f4;--card:#fff;--tx:#1d1d1b;--mu:#6b6b66;--bd:#dcdcd5;--ac:#2563eb;--ok:#e8f0ff}
+@media(prefers-color-scheme:dark){:root{--bg:#171716;--card:#232321;--tx:#ececE8;--mu:#a0a09a;--bd:#3a3a36;--ac:#6b9bff;--ok:#27324d}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 Georgia,"Times New Roman",serif}
+main{max-width:920px;margin:auto;padding:16px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:16px;margin-bottom:12px}
+.q{font-weight:bold}.ui{font:14px system-ui,sans-serif}
+.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px;font:14px system-ui,sans-serif}
+button{font:14px system-ui,sans-serif;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:8px;padding:6px 12px;cursor:pointer}
+button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--bd);border-radius:20px;padding:5px 12px;cursor:pointer;user-select:none}
+.chip.off{opacity:.4;text-decoration:line-through}.dot{width:12px;height:12px;border-radius:50%}
+.hint{font:13px system-ui,sans-serif;color:var(--mu);margin:0 0 8px}
+input[type=text]{font:14px system-ui,sans-serif;padding:6px 10px;border:1px solid var(--bd);border-radius:8px;background:var(--card);color:var(--tx);width:260px;max-width:100%}
+input[type=range]{flex:1;min-width:160px}
+#yr{font-size:20px;min-width:52px}
+.wrap{position:relative;height:380px}
+.pick{font:14px system-ui,sans-serif;background:var(--ok);border-radius:8px;padding:8px 12px;margin-top:10px;min-height:40px}
+ul{font:14px system-ui,sans-serif;margin:8px 0;padding-left:20px}li button{padding:0 6px;margin-left:6px}
+.tbl{overflow-x:auto;margin-top:10px;display:none}table{border-collapse:collapse;width:100%;font:14px system-ui,sans-serif}td,th{border:1px solid var(--bd);padding:5px 8px;text-align:center}
+</style>
+</head>
+<body>
+<main>
+<div class="card q">The line graph provides information about the number of international conferences that took place in three different cities. Provide an overview of the information by identifying and describing the key details, and include comparisons where appropriate.</div>
+<div class="card">
+  <div class="bar"><b>Tool:</b>
+    <button class="on" data-m="view">Read values</button>
+    <button data-m="compare">Compare 2 points</button>
+    <button data-m="annotate">Add labels</button></div>
+  <p class="hint" id="hint"></p>
+  <div class="bar" id="annbar" hidden><input type="text" id="lab" list="sug" placeholder="Type or choose a label, e.g. peak">
+    <datalist id="sug"><option value="Highest point"><option value="Lowest point"><option value="Peak"><option value="Overtakes"><option value="Sharp rise"><option value="Gradual decline"><option value="Stays stable"><option value="Fluctuates"></datalist></div>
+  <div class="bar"><button id="play">▶ Play</button><input type="range" id="sl" min="0" max="5" value="5"><b id="yr">2010</b><button id="all">Show all</button></div>
+  <div class="bar" id="ctl"></div>
+  <div class="wrap"><canvas id="c"></canvas></div>
+  <div class="pick" id="pick"></div>
+  <ul id="anns"></ul>
+  <div class="bar"><button id="save">Save image</button><button id="clr">Clear marks</button><button id="tb">Show data table</button></div>
+  <div class="tbl" id="tbl"></div>
+</div>
+</main>
+<script>
+const Y=[1965,1975,1985,1995,2005,2010];
+const S=[{n:'City A',c:'#2563eb',dash:[],d:[35,20,30,28,30,20]},{n:'City B',c:'#e11d48',dash:[7,4],d:[31,29,29,27,29,25]},{n:'City C',c:'#6b7280',dash:[2,4],d:[0,10,20,30,25,29]}];
+let k=Y.length-1,mode='view',cmp=[],anns=[],timer=null;
+const $=id=>document.getElementById(id),esc=t=>t.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const cs=getComputedStyle(document.documentElement);
+Chart.defaults.color=cs.getPropertyValue('--mu').trim()||'#888';
+Chart.defaults.borderColor=cs.getPropertyValue('--bd').trim()||'#ddd';
+const vis=(si,i)=>chart.isDatasetVisible(si)&&i<=k;
+const P={id:'ov',afterDatasetsDraw(c){
+ const x=c.scales.x,y=c.scales.y,ctx=c.ctx,a=c.chartArea;
+ const pt=(si,i)=>[x.getPixelForValue(Y[i]),y.getPixelForValue(S[si].d[i])];
+ ctx.save();
+ if(mode==='compare'){
+  const m=cmp.filter(p=>vis(p.si,p.i));
+  if(m.length===2){ctx.setLineDash([6,5]);ctx.strokeStyle='#e11d48';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(...pt(m[0].si,m[0].i));ctx.lineTo(...pt(m[1].si,m[1].i));ctx.stroke();ctx.setLineDash([]);}
+  m.forEach((p,j)=>{const[px,py]=pt(p.si,p.i);ctx.strokeStyle='#e11d48';ctx.lineWidth=3;ctx.beginPath();ctx.arc(px,py,11,0,7);ctx.stroke();
+   ctx.fillStyle='#e11d48';ctx.font='bold 13px system-ui';ctx.fillText(j?'2':'1',px+13,py-10);});
+ }
+ ctx.font='13px system-ui';
+ anns.forEach((n,j)=>{if(!vis(n.si,n.i))return;
+  const[px,py]=pt(n.si,n.i),w=ctx.measureText(n.t).width+14,h=22;
+  const lift=26*anns.slice(0,j).filter(o=>o.i===n.i&&vis(o.si,o.i)).length;
+  let ry=py-38-lift;if(ry<a.top)ry=py+16+lift;
+  const rx=Math.min(Math.max(px-w/2,a.left),a.right-w);
+  ctx.strokeStyle=S[n.si].c;ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(px,py);ctx.lineTo(px,ry<py?ry+h:ry);ctx.stroke();
+  ctx.fillStyle='#fff';ctx.beginPath();ctx.roundRect(rx,ry,w,h,6);ctx.fill();ctx.stroke();
+  ctx.fillStyle='#111';ctx.fillText(n.t,rx+7,ry+15);});
+ ctx.restore();}};
+const chart=new Chart($('c'),{type:'line',plugins:[P],
+ data:{datasets:S.map(s=>({label:s.n,data:s.d.map((v,i)=>({x:Y[i],y:v})),borderColor:s.c,backgroundColor:s.c,borderWidth:3,borderDash:s.dash||[],pointRadius:5,pointHoverRadius:8,tension:0}))},
+ options:{responsive:true,maintainAspectRatio:false,animation:false,interaction:{mode:'nearest',intersect:true},elements:{point:{hitRadius:12}},
+  scales:{x:{type:'linear',min:1962,max:2013,afterBuildTicks:a=>{a.ticks=Y.map(v=>({value:v}))},ticks:{callback:v=>String(v)},grid:{display:false}},
+          y:{min:0,max:40,ticks:{stepSize:5},title:{display:true,text:'Number of conferences'}}},
+  plugins:{legend:{display:false},tooltip:{callbacks:{title:i=>String(i[0].parsed.x),label:c=>` ${c.dataset.label}: ${c.parsed.y}`}}},
+  onClick:(e,els)=>{if(els.length)hit(els[0].datasetIndex,els[0].index);}}});
+const tx=(si,i)=>`${S[si].n}, ${Y[i]}: ${S[si].d[i]}`;
+function hit(si,i){
+ if(mode==='view')$('pick').textContent='Selected point: '+tx(si,i);
+ else if(mode==='compare'){if(cmp.length===2)cmp=[];cmp.push({si,i});}
+ else{const t=$('lab').value.trim();if(!t){$('pick').textContent='Type or choose a label first, then click a point.';return;}anns.push({si,i,t});}
+ render();}
+function render(){
+ const h={view:'Click a point to read its exact value.',compare:'Click two points (point 1 and point 2) to compare them.',annotate:'Type or choose a label, then click a point to attach it. Labels appear on the chart.'};
+ $('hint').textContent=h[mode];$('annbar').hidden=mode!=='annotate';
+ if(mode==='compare'){const m=cmp.filter(p=>p.i<=k);
+  if(!m.length)$('pick').textContent='Click two points (point 1 and point 2) to compare them.';
+  else if(m.length===1)$('pick').textContent='Point 1: '+tx(m[0].si,m[0].i)+'. Now click a second point.';
+  else{const a=S[m[0].si].d[m[0].i],b=S[m[1].si].d[m[1].i],d=b-a;
+   $('pick').innerHTML=`<b>Point 1:</b> ${tx(m[0].si,m[0].i)}<br><b>Point 2:</b> ${tx(m[1].si,m[1].i)}<br>Difference (2 − 1): <b>${d>0?'+':''}${d} conferences</b>`+(a?` · Point 2 is <b>${(b/a).toFixed(2)}×</b> point 1 · change <b>${d>0?'+':''}${Math.round(d/a*100)}%</b>`:'');}}
+ else if(mode==='annotate')$('pick').textContent=anns.length?'Labels added: '+anns.length:'No labels yet.';
+ $('anns').innerHTML=anns.map((n,j)=>`<li>${tx(n.si,n.i)} – “${esc(n.t)}” <button data-r="${j}">×</button></li>`).join('');
+ chart.draw();}
+function setK(n){k=n;chart.data.datasets.forEach((ds,si)=>ds.data=S[si].d.slice(0,k+1).map((v,i)=>({x:Y[i],y:v})));chart.update('none');$('yr').textContent=Y[k];$('sl').value=k;render();}
+function stop(){clearInterval(timer);timer=null;$('play').textContent='▶ Play';}
+$('play').onclick=()=>{if(timer){stop();return;}if(k>=Y.length-1)setK(0);$('play').textContent='❚❚ Pause';timer=setInterval(()=>{if(k>=Y.length-1)stop();else setK(k+1);},1000);};
+$('sl').oninput=e=>{stop();setK(+e.target.value);};
+$('all').onclick=()=>{stop();setK(Y.length-1);};
+document.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{mode=b.dataset.m;cmp=[];document.querySelectorAll('[data-m]').forEach(x=>x.classList.toggle('on',x===b));render();});
+$('anns').onclick=e=>{const r=e.target.dataset.r;if(r!==undefined){anns.splice(+r,1);render();}};
+$('clr').onclick=()=>{cmp=[];anns=[];render();};
+$('ctl').innerHTML=S.map((s,i)=>`<span class="chip" data-i="${i}"><span class="dot" style="background:${s.c}"></span>${s.n}</span>`).join('');
+$('ctl').onclick=e=>{const el=e.target.closest('.chip');if(!el)return;const i=+el.dataset.i,h=chart.isDatasetVisible(i);chart.setDatasetVisibility(i,!h);el.classList.toggle('off',h);chart.update('none');render();};
+$('save').onclick=()=>{const o=chart.options.scales;['x','y'].forEach(a=>o[a].ticks.color='#333');o.y.title.color='#333';o.y.grid={color:'#ddd'};chart.update('none');
+ const c=chart.canvas,t=document.createElement('canvas');t.width=c.width;t.height=c.height;const g=t.getContext('2d');g.fillStyle='#fff';g.fillRect(0,0,t.width,t.height);g.drawImage(c,0,0);
+ const l=document.createElement('a');l.href=t.toDataURL('image/png');l.download='conferences-chart.png';l.click();
+ ['x','y'].forEach(a=>delete o[a].ticks.color);delete o.y.title.color;delete o.y.grid;chart.update('none');render();};
+$('tbl').innerHTML='<table><tr><th></th>'+Y.map(y=>`<th>${y}</th>`).join('')+'</tr>'+S.map(s=>`<tr><th>${s.n}</th>`+s.d.map(v=>`<td>${v}</td>`).join('')+'</tr>').join('')+'</table>';
+$('tb').onclick=()=>{const t=$('tbl'),s=t.style.display==='block';t.style.display=s?'none':'block';$('tb').textContent=s?'Show data table':'Hide data table';};
+render();
+</script>
+</body>
+</html>
