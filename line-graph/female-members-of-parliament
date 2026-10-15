@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IELTS Writing Task 1 – Female members of parliament</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--bg:#f7f7f4;--card:#fff;--tx:#1d1d1b;--mu:#6b6b66;--bd:#dcdcd5;--ok:#e8f0ff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171716;--card:#232321;--tx:#ececE8;--mu:#a0a09a;--bd:#3a3a36;--ok:#27324d}}
+:root[data-theme="dark"]{--bg:#171716;--card:#232321;--tx:#ececE8;--mu:#a0a09a;--bd:#3a3a36;--ok:#27324d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 Georgia,"Times New Roman",serif}
+main{max-width:900px;margin:auto;padding:16px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:16px;margin-bottom:12px}
+.q{font-weight:bold}.hint{font:13px system-ui,sans-serif;color:var(--mu);margin:0 0 10px}
+.ctl{font:14px system-ui,sans-serif;display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--bd);border-radius:20px;padding:5px 12px;cursor:pointer;user-select:none;background:var(--card);color:var(--tx)}
+.chip.off{opacity:.4;text-decoration:line-through}
+.dot{width:12px;height:12px;border-radius:50%}
+.wrap{position:relative;height:380px}
+.pick{font:14px system-ui,sans-serif;background:var(--ok);border-radius:8px;padding:8px 12px;margin-top:10px;min-height:38px}
+button.b{font:14px system-ui,sans-serif;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:8px;padding:6px 12px;cursor:pointer}
+.tbl{overflow-x:auto;margin-top:10px;display:none}table{border-collapse:collapse;width:100%;font:14px system-ui,sans-serif}td,th{border:1px solid var(--bd);padding:5px 8px;text-align:center}
+</style>
+</head>
+<body>
+<main>
+<div class="card q">The graph below shows the percentage of female members of parliament in five European countries between 2000 and 2012. Provide an overview of the information by identifying and describing the key details, and include comparisons where appropriate.</div>
+<div class="card">
+  <p class="hint">Click a country to show/hide its line. Hover or tap a point to read its exact value.</p>
+  <div class="ctl" id="ctl"></div>
+  <div class="wrap"><canvas id="c"></canvas></div>
+  <div class="pick" id="pick">Selected point: –</div>
+  <p style="margin:12px 0 0"><button class="b" id="tb">Show data table</button></p>
+  <div class="tbl" id="tbl"></div>
+</div>
+</main>
+<script>
+const Y=[2000,2004,2008,2012];
+const S=[{n:'Germany',c:'#6b7280',dash:[],d:[31,32,31,32]},{n:'Spain',c:'#16a34a',dash:[8,5],d:[27,36,35,35]},{n:'Belgium',c:'#2563eb',dash:[4,4],d:[23,35,35,38]},{n:'UK',c:'#f97316',dash:[2,4],d:[17,17,20,23]},{n:'Italy',c:'#e11d48',dash:[],d:[2,3,23,23]}];
+const $=id=>document.getElementById(id);
+const cs=getComputedStyle(document.documentElement);
+Chart.defaults.color=cs.getPropertyValue('--mu').trim()||'#888';
+Chart.defaults.borderColor=cs.getPropertyValue('--bd').trim()||'#ddd';
+const chart=new Chart($('c'),{type:'line',
+ data:{datasets:S.map(s=>({label:s.n,data:s.d.map((v,i)=>({x:Y[i],y:v})),borderColor:s.c,backgroundColor:s.c,borderWidth:3,borderDash:s.dash||[],pointRadius:5,pointHoverRadius:8,tension:0}))},
+ options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'nearest',intersect:true},
+  scales:{x:{type:'linear',min:1999,max:2013,afterBuildTicks:a=>{a.ticks=Y.map(v=>({value:v}))},ticks:{callback:v=>String(v)},grid:{display:false}},
+          y:{min:0,max:45,ticks:{stepSize:5},title:{display:true,text:'% of female members'}}},
+  plugins:{legend:{display:false},tooltip:{callbacks:{title:i=>String(i[0].parsed.x),label:c=>` ${c.dataset.label}: ${c.parsed.y}%`}}},
+  onClick:(e,els)=>{if(!els.length)return;const el=els[0],ds=chart.data.datasets[el.datasetIndex],p=ds.data[el.index];$('pick').textContent=`Selected point: ${ds.label}, ${p.x} – ${p.y}%`;}}});
+$('ctl').innerHTML=S.map((s,i)=>`<span class="chip" data-i="${i}"><span class="dot" style="background:${s.c}"></span>${s.n}</span>`).join('');
+$('ctl').onclick=e=>{const el=e.target.closest('.chip');if(!el)return;const i=+el.dataset.i;const h=chart.isDatasetVisible(i);chart.setDatasetVisibility(i,!h);el.classList.toggle('off',h);chart.update();};
+$('tbl').innerHTML='<table><tr><th></th>'+Y.map(y=>`<th>${y}</th>`).join('')+'</tr>'+S.map(s=>`<tr><th>${s.n}</th>`+s.d.map(v=>`<td>${v}</td>`).join('')+'</tr>').join('')+'</table>';
+$('tb').onclick=()=>{const t=$('tbl'),s=t.style.display==='block';t.style.display=s?'none':'block';$('tb').textContent=s?'Show data table':'Hide data table';};
+</script>
+</body>
+</html>
