@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>IELTS Writing Task 1 – Training room layouts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f2f5f9;--card:#fff;--ink:#16233a;--mut:#56637a;--line:#2b3a55;--brd:#d5dce8;--tbl:#fff;--chr:#cfe0f5;--tea:#fbd3de;--hl:#16233a;--a:#0d7a6f;--b:#7c3aed;--same:#868e96;--same-s:#eceff3;--moved:#e8590c;--moved-s:#ffe3d0;--rearr:#1971c2;--rearr-s:#d0e8ff}
+@media (prefers-color-scheme:dark){:root{--bg:#111722;--card:#1b2433;--ink:#e6ebf3;--mut:#9aa8bf;--line:#8fa2c2;--brd:#33415a;--tbl:#26324a;--chr:#35507a;--tea:#6b3347;--hl:#e6ebf3;--a:#3cc4b4;--b:#b197fc;--same:#9aa8bf;--same-s:#2a3446;--moved:#ff922b;--moved-s:#5a3412;--rearr:#74c0fc;--rearr-s:#1e3f5e}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Be Vietnam Pro",system-ui,sans-serif;padding:14px 20px 40px}
+.wrap{max-width:1560px;margin:0 auto}
+.layout{display:grid;grid-template-columns:minmax(0,1fr);gap:20px}
+.side{display:flex;flex-direction:column;gap:14px}
+@media (min-width:1000px){.layout{grid-template-columns:minmax(0,1fr) 340px}.side{position:sticky;top:12px;align-self:start;max-height:calc(100vh - 24px);overflow:auto}}
+h1{font-size:1.4rem;margin:0 0 6px}
+.task{margin:0 0 12px;color:var(--mut);max-width:110ch;font-size:.95rem}
+.modes{display:inline-flex;border:1px solid var(--brd);border-radius:8px;overflow:hidden;margin-bottom:14px;background:var(--card)}
+.modes button{border:0;background:none;color:var(--ink);font:inherit;padding:8px 16px;cursor:pointer}
+.modes button[aria-pressed=true]{background:var(--ink);color:var(--bg);font-weight:600}
+.plans{display:grid;gap:14px;grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:700px){.plans{grid-template-columns:minmax(0,1fr)}svg{width:100%!important;height:auto!important}}
+body[data-mode=A] .plans,body[data-mode=B] .plans{grid-template-columns:minmax(0,640px);justify-content:center}
+body[data-mode=A] #pB,body[data-mode=B] #pA{display:none}
+.plan{position:relative;margin:0;background:var(--card);border:1px solid var(--brd);border-radius:10px;padding:12px}
+.plan figcaption{display:flex;justify-content:space-between;gap:8px;margin-bottom:8px;font-size:.95rem}
+#pA{border-top:4px solid var(--a)}#pB{border-top:4px solid var(--b)}
+#pA b{color:var(--a)}#pB b{color:var(--b)}
+.cnt{color:var(--mut);white-space:nowrap}
+svg{display:block;margin:0 auto;width:auto;max-width:100%;height:clamp(480px,calc(100vh - 150px),720px)}
+.room{fill:var(--card);stroke:var(--line);stroke-width:2}
+.tbl,.wb{fill:var(--tbl);stroke:var(--line);stroke-width:1.2}
+.chr{fill:var(--chr);stroke:var(--line);stroke-width:1.2}
+.tea{fill:var(--tea);stroke:var(--line);stroke-width:1.2}
+.door{fill:none;stroke:var(--line);stroke-width:1.5}
+.hit{fill:transparent}
+.lbl{font:10px "Be Vietnam Pro",sans-serif;fill:var(--ink);pointer-events:none}
+[data-f]{cursor:pointer;transition:opacity .2s}
+.dim{opacity:.15}
+.lbl.sm{font-size:9px}
+.ldr{stroke:var(--mut);stroke-width:.8;pointer-events:none}
+svg [data-t=same]{--c:var(--same);--s:var(--same-s)}
+svg [data-t=moved]{--c:var(--moved);--s:var(--moved-s)}
+svg [data-t=rearr]{--c:var(--rearr);--s:var(--rearr-s)}
+svg .tbl[data-t],svg .wb[data-t],svg .chr[data-t],svg .tea[data-t]{fill:var(--s);stroke:var(--c);stroke-width:1.6}
+svg [data-f].on{stroke:var(--hl);stroke-width:2.8}
+body.only svg [data-t=same]{opacity:.15}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:12px}
+.bar .modes{margin:0}
+.tog{font:inherit;border:1px solid var(--brd);background:var(--card);color:var(--ink);border-radius:8px;padding:8px 16px;cursor:pointer}
+.tog[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink);font-weight:600}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;margin-bottom:14px;font-size:.9rem;color:var(--mut)}
+.legend i{display:inline-block;width:14px;height:14px;border-radius:3px;border:2px solid;vertical-align:-2px;margin-right:6px}
+.legend i.same{border-color:var(--same);background:var(--same-s)}
+.legend i.moved{border-color:var(--moved);background:var(--moved-s)}
+.legend i.rearr{border-color:var(--rearr);background:var(--rearr-s)}
+#pop{position:absolute;z-index:5;width:min(280px,calc(100% - 12px));background:var(--card);color:var(--ink);border:1px solid var(--ink);border-radius:10px;padding:10px 12px 8px;box-shadow:0 6px 18px rgba(0,0,0,.22);font-size:.85rem;line-height:1.4}
+#pop h3{margin:0 24px 6px 0;font-size:.95rem}
+#pop .x{position:absolute;top:4px;right:6px;border:0;background:none;color:var(--mut);font-size:1.3rem;line-height:1;cursor:pointer;padding:2px 6px}
+#pop .ps{padding:6px 8px;margin:4px 0;border-left:4px solid;border-radius:4px;background:var(--bg)}
+#pop .ps.sa{border-color:var(--a)}#pop .ps.sb{border-color:var(--b)}
+#pop .ps.here{box-shadow:inset 0 0 0 1.5px var(--ink)}
+#pop h4{margin:0 0 2px;font-size:.8rem}#pop .sa h4{color:var(--a)}#pop .sb h4{color:var(--b)}
+#pop p{margin:0}#pop .rel{margin-top:3px;color:var(--mut)}
+.sum p{margin:8px 0}
+.vbank{background:var(--card);border:1px solid var(--brd);border-radius:10px;padding:14px}
+.vbank h2{font-size:1.05rem;margin:0 0 2px}
+.vbank h3{font-size:.8rem;color:var(--mut);margin:14px 0 6px;font-weight:600}
+.vbank .hint{margin:0;color:var(--mut);font-size:.85rem}
+.vw{display:flex;justify-content:space-between;align-items:baseline;gap:8px;width:100%;text-align:left;font:inherit;font-size:.88rem;background:var(--bg);color:var(--ink);border:1px solid var(--brd);border-left:4px solid var(--ink);border-radius:6px;padding:6px 10px;margin:0 0 6px;cursor:pointer}
+.vw.moved{border-left-color:var(--moved)}.vw.rearr{border-left-color:var(--rearr)}.vw.same{border-left-color:var(--same)}
+.vw span{color:var(--mut);font-size:.8rem;text-align:right}
+.vw[aria-pressed=true]{background:var(--ink);color:var(--bg)}
+.vw[aria-pressed=true] span{color:var(--bg);opacity:.85}
+.vnote{margin:12px 0 0;padding:8px 12px;background:var(--bg);border-left:4px solid var(--ink);border-radius:4px}
+.tl{margin:10px 0 0;padding-left:20px}
+.plan.flash{box-shadow:0 0 0 3px var(--hl)}
+.plan{transition:box-shadow .3s}
+.frame{margin:6px 0 0;padding:10px 12px;background:var(--bg);border-left:4px solid var(--ink);border-radius:4px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 12px}
+.chips button{font:inherit;font-size:.9rem;border:1px solid var(--brd);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 14px;cursor:pointer}
+.chips button[aria-pressed=true]{border-color:var(--ink);background:var(--ink);color:var(--bg);font-weight:600}
+button:focus-visible{outline:3px solid var(--hl);outline-offset:2px}
+#info{background:var(--card);border:1px solid var(--brd);border-radius:10px;padding:16px;min-height:120px}
+#info h2{display:inline;font-size:1.1rem;margin:0 10px 0 0}
+.tag{font-size:.8rem;font-weight:600;padding:2px 10px;border-radius:999px;border:1.5px solid currentColor}
+.tag.same{color:var(--same)}.tag.moved{color:var(--moved)}.tag.rearr{color:var(--rearr)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:12px;margin:12px 0}
+.cols div{padding:10px 12px;border-left:4px solid;border-radius:4px;background:var(--bg)}
+.cols .ca{border-color:var(--a)}.cols .cb{border-color:var(--b)}
+.cols h3{margin:0 0 2px;font-size:.85rem}.ca h3{color:var(--a)}.cb h3{color:var(--b)}
+.cols p,.tip,.vi,.empty{margin:0}
+.tip{font-weight:600}.vi{color:var(--mut);font-size:.92rem;margin-top:4px}.empty{color:var(--mut)}
+details{margin-top:12px;background:var(--card);border:1px solid var(--brd);border-radius:10px;padding:10px 16px}
+summary{cursor:pointer;font-weight:600}
+details ul,details ol{margin:8px 0 2px;padding-left:20px}
+.vocab{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.vocab span{background:var(--bg);border:1px solid var(--brd);border-radius:6px;padding:2px 10px;font-size:.9rem}
+@media (prefers-reduced-motion:reduce){[data-f]{transition:none}}
+</style>
+</head>
+<body data-mode="both">
+<div class="wrap">
+<h1>Training session room layouts</h1>
+<p class="task">The plans show the room layouts for training session for up to ten people and more than ten people. Summarize the information by selecting and reporting the main features, and make comparisons where relevant.</p>
+
+<div class="layout"><main>
+<div class="bar"><div class="modes" role="group" aria-label="Chế độ xem">
+  <button data-mode="both" aria-pressed="true">So sánh</button>
+  <button data-mode="A" aria-pressed="false">Plan A</button>
+  <button data-mode="B" aria-pressed="false">Plan B</button>
+</div>
+<button class="tog" id="onlyChg" aria-pressed="false">Chỉ hiện thay đổi</button></div>
+<div class="legend" aria-label="Chú thích mã màu"><span><i class="same"></i>Không đổi (unchanged)</span><span><i class="moved"></i>Di dời (relocated)</span><span><i class="rearr"></i>Sắp xếp lại (rearranged)</span></div>
+
+<div class="plans">
+  <figure class="plan" id="pA"><figcaption><span><b>Plan A</b> – no more than 10 people</span><span class="cnt">10 student chairs</span></figcaption><svg id="svgA" viewBox="0 0 300 400" role="img" aria-label="Plan A room layout"></svg></figure>
+  <figure class="plan" id="pB"><figcaption><span><b>Plan B</b> – more than 10 people</span><span class="cnt">18 student chairs</span></figcaption><svg id="svgB" viewBox="0 0 300 400" role="img" aria-label="Plan B room layout"></svg></figure>
+</div>
+
+<div class="chips" id="chips" role="group" aria-label="Chọn khu vực">
+  <button data-f="" aria-pressed="true">Tất cả</button>
+  <button data-f="entrance" aria-pressed="false">Entrance</button>
+  <button data-f="presenter" aria-pressed="false">Presenter</button>
+  <button data-f="whiteboard" aria-pressed="false">Whiteboard</button>
+  <button data-f="seating" aria-pressed="false">Student seating</button>
+  <button data-f="tea" aria-pressed="false">Morning tea</button>
+</div>
+</main>
+<aside class="side"><section id="info" aria-live="polite"></section><div class="vbank" aria-label="Ngân hàng từ vựng"><h2>Ngân hàng từ vựng</h2><p class="hint">Bấm vào một từ để xem phần tương ứng trên bản đồ.</p><div id="vb"></div></div></aside></div>
+</div>
+
+<script>
+const rect=(f,x,y,w,h,c)=>`<rect data-f="${f}" class="${c}" x="${x}" y="${y}" width="${w}" height="${h}" rx="3"/>`;
+const chair=(f,x,y,r=7)=>`<circle data-f="${f}" class="chr" cx="${x}" cy="${y}" r="${r}"/>`;
+const txt=(f,x,y,s,a='start')=>`<text data-f="${f}" class="lbl" x="${x}" y="${y}" text-anchor="${a}">${s}</text>`;
+const sm=(f,x,y,l1,l2)=>`<text data-f="${f}" class="lbl sm" x="${x}" y="${y}">${l1}<tspan x="${x}" dy="10">${l2}</tspan></text>`;
+const ldr=(f,x1,y1,x2,y2)=>`<line data-f="${f}" class="ldr" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"/>`;
+const room='<rect class="room" x="8" y="8" width="284" height="384" rx="4"/>';
+const door='<g data-f="entrance"><rect class="hit" x="148" y="8" width="84" height="38"/><path class="door" d="M160 8V26A18 18 0 0 0 178 8M200 8V26A18 18 0 0 0 218 8"/></g>'+txt('entrance',190,40,'Entrance','middle');
+
+const planA=[room,door,
+  rect('presenter',28,100,82,26,'tbl'),chair('presenter',62,86,9),txt('presenter',28,68,"Presenter's chair"),
+  rect('whiteboard',148,90,80,22,'wb'),txt('whiteboard',188,104,'Whiteboard','middle'),
+  ...[152,180,208].flatMap(y=>[rect('seating',71,y,14,26,'tbl'),chair('seating',60,y+13),rect('seating',215,y,14,26,'tbl'),chair('seating',240,y+13)]),
+  ...[108,136,164].map(x=>rect('seating',x,244,28,14,'tbl')),
+  ...[117,139,161,183].map(x=>chair('seating',x,275)),
+  sm('seating',12,142,'Student','table'),ldr('seating',44,150,71,156),
+  sm('seating',12,190,'Student','chair'),ldr('seating',44,192,53,193),
+  sm('seating',52,247,'Student','table'),ldr('seating',88,251,107,251),
+  sm('seating',204,272,'Student','chair'),ldr('seating',202,275,191,275),
+  rect('tea',92,338,116,28,'tea'),txt('tea',150,356,'Morning tea','middle'),...[104,118,132].map(x=>chair('tea',x,329,5))
+].join('');
+
+const planB=[room,door,
+  '<path data-f="tea" class="tea" d="M8 8H111V42H69V139H8Z"/>',sm('tea',14,54,'Morning','tea'),
+  ...[62,78,94].map(x=>chair('tea',x,29,5)),...[88,103,118].map(y=>chair('tea',26,y,5)),
+  rect('whiteboard',72,68,72,22,'wb'),txt('whiteboard',108,82,'Whiteboard','middle'),
+  rect('presenter',100,117,112,34,'tbl'),chair('presenter',156,112,10),sm('presenter',172,104,"Presenter's",'chair'),
+  ...[190,218,246].flatMap(y=>[rect('seating',84,y,36,22,'tbl'),chair('seating',72,y+11),chair('seating',132,y+11),rect('seating',190,y,36,22,'tbl'),chair('seating',178,y+11),chair('seating',238,y+11)]),
+  ...[112,142,172].flatMap(x=>[rect('seating',x,322,28,20,'tbl'),chair('seating',x+14,310),chair('seating',x+14,354)]),
+  sm('seating',12,232,'Student','chair'),ldr('seating',44,234,65,229),
+  sm('seating',12,284,'Student','table'),ldr('seating',44,281,88,267),
+  sm('seating',214,328,'Student','table'),ldr('seating',212,331,201,331),
+  sm('seating',214,356,'Student','chair'),ldr('seating',212,355,194,355)
+].join('');
+
+document.getElementById('svgA').innerHTML=planA;
+document.getElementById('svgB').innerHTML=planB;
+
+const F={
+ entrance:{n:'Entrance',t:['same','Không đổi'],
+  a:'In the top-right corner of the room.',b:'Also in the top-right corner.',
+  tip:'The entrance remains in the same position in both plans.',vi:'Lối vào không thay đổi, dùng làm điểm mốc để mô tả vị trí các khu vực khác.'},
+ presenter:{n:"Presenter's desk and chair",t:['moved','Di dời'],
+  a:'In the top-left corner, to the left of the whiteboard.',b:'Near the middle of the room, to the lower right of the whiteboard, with the chair in the centre of the desk.',
+  tip:"The presenter's desk was relocated from the top-left corner towards the middle of the room.",vi:'Chuyển từ góc trái vào gần giữa phòng; ghế nằm giữa bàn.'},
+ whiteboard:{n:'Whiteboard',t:['moved','Di dời'],
+  a:'In the upper part of the room, slightly to the right of the centre, in front of the U-shaped seating.',b:"On the left, to the upper left of the presenter's chair and next to the morning tea area.",
+  tip:"The whiteboard was moved to the left, so it sits to the upper left of the presenter's chair.",vi:'Từ giữa phòng dịch sang trái, nằm phía trên bên trái ghế presenter.'},
+ seating:{n:'Student tables and chairs',t:['rearr','Sắp xếp lại'],
+  a:'U-shaped: three tables on each side and three at the bottom, with 10 chairs in total.',
+  b:'Three separate blocks of three tables each, with chairs on both sides of every table (18 chairs).',
+  tip:'The U-shaped arrangement was replaced by three separate blocks, increasing the seating capacity from 10 to 18.',vi:'Thay đổi lớn nhất: hình chữ U thành 3 cụm bàn riêng, tăng số chỗ ngồi.'},
+ tea:{n:'Morning tea area',t:['moved','Di dời'],
+  a:'A rectangular table with three chairs at the bottom of the room.',b:'An L-shaped area in the top-left corner, touching the top and left walls, with chairs along two sides.',
+  tip:'The morning tea area was relocated from the bottom of the room to an L-shaped zone in the top-left corner.',vi:'Từ cuối phòng chuyển lên góc trên bên trái và đổi hình dạng.'}
+};
+
+document.querySelectorAll('svg [data-f]').forEach(el=>{el.dataset.t=F[el.dataset.f].t[0]});
+const TY={same:'Không đổi',moved:'Di dời',rearr:'Sắp xếp lại'};
+function summary(){
+  const g=k=>Object.values(F).filter(d=>d.t[0]===k).map(d=>d.n).join(', ');
+  return `<h2>Các thay đổi chính</h2><div class="sum">${['moved','rearr','same'].map(k=>`<p><span class="tag ${k}">${TY[k]}</span> ${g(k)}</p>`).join('')}</div>
+   <p class="tip">Khung câu cho Overview</p>
+   <p class="frame">Overall, the ______ remained in the same position, while the ______ were relocated and the ______ was rearranged.</p>
+   <p class="vi">Overview chỉ nêu bức tranh chung: nhóm các thay đổi theo loại, chưa cần mô tả chi tiết vị trí. Hãy tự điền chỗ trống bằng các mục ở trên.</p>`;
+}
+const P={
+ entrance:{sa:"Two doors in the top-right corner.",sb:"Unchanged: two doors in the top-right corner.",
+  pa:"On the opposite side of the room to the presenter's desk.",pb:"Above the presenter's desk, to the right of the whiteboard."},
+ presenter:{sa:"Desk and chair in the top-left corner.",sb:"Desk and chair nearer the middle of the room, with the chair in the centre of the desk.",
+  pa:"To the left of the whiteboard, far from the entrance.",pb:"Below and to the right of the whiteboard, below the entrance."},
+ whiteboard:{sa:"In the upper part of the room, slightly to the right of the centre.",sb:"Moved to the left side of the room.",
+  pa:"To the right of the presenter's desk, in front of the U-shaped seating.",pb:"To the upper left of the presenter's chair, next to the morning tea area."},
+ seating:{sa:"U-shaped arrangement with 10 chairs.",sb:"Three separate blocks of tables with 18 chairs.",
+  pa:"Around the open middle of the room, above the morning tea table.",pb:"Filling the lower part of the room, below the presenter's desk: two blocks side by side and one block in front."},
+ tea:{sa:"A rectangular table with three chairs.",sb:"An L-shaped area with chairs along two sides.",
+  pa:"At the bottom of the room, below the seating and far from the entrance.",pb:"In the top-left corner, along the top and left walls, to the left of the whiteboard."}
+};
+function hidePop(){const o=document.getElementById('pop');if(o)o.remove()}
+function showPop(f,fig,e){
+  hidePop();
+  const d=F[f],q=P[f],here=fig.id==='pA'?'A':'B';
+  const sec=(k,st,pos)=>`<div class="ps s${k.toLowerCase()}${k===here?' here':''}"><h4>Plan ${k}</h4><p>${st}</p><p class="rel"><b>Vị trí:</b> ${pos}</p></div>`;
+  const pop=document.createElement('div');
+  pop.id='pop';pop.setAttribute('role','dialog');pop.setAttribute('aria-label',d.n);
+  pop.innerHTML=`<button class="x" aria-label="Đóng">×</button><h3>${d.n} <span class="tag ${d.t[0]}">${d.t[1]}</span></h3>${sec('A',q.sa,q.pa)}${sec('B',q.sb,q.pb)}`;
+  fig.appendChild(pop);
+  const r=fig.getBoundingClientRect(),w=pop.offsetWidth,h=pop.offsetHeight;
+  let x=e.clientX-r.left-w/2;x=Math.max(6,Math.min(x,r.width-w-6));
+  let y=e.clientY-r.top+14;if(y+h>r.height-6)y=e.clientY-r.top-h-14;y=Math.max(6,y);
+  pop.style.left=x+'px';pop.style.top=y+'px';
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')hidePop()});
+const info=document.getElementById('info');
+let cur='';
+const EN={same:'unchanged',moved:'relocated',rearr:'rearranged'};
+let activeW=-1;
+const V=[
+ {g:'Thay đổi',w:'relocated',vi:'di dời',f:'t:moved',k:'moved',ex:"The morning tea area was relocated to the top-left corner."},
+ {g:'Thay đổi',w:'rearranged',vi:'sắp xếp lại',f:'t:rearr',k:'rearr',ex:"The seating was rearranged into three separate blocks."},
+ {g:'Thay đổi',w:'remained unchanged',vi:'giữ nguyên',f:'t:same',k:'same',ex:"The entrance remained unchanged."},
+ {g:'Thay đổi',w:'replaced by',vi:'được thay bằng',f:'seating',plan:'B',ex:"The U-shaped layout was replaced by three separate blocks."},
+ {g:'Thay đổi',w:'moved to',vi:'được chuyển đến',f:'whiteboard',plan:'B',ex:"The whiteboard was moved to the left side of the room."},
+ {g:'Thay đổi',w:'seating capacity',vi:'sức chứa',f:'seating',ex:"The seating capacity increased from 10 to 18."},
+ {g:'Vị trí',w:'in the top-right corner',vi:'ở góc trên bên phải',f:'entrance',ex:"The entrance is in the top-right corner in both plans."},
+ {g:'Vị trí',w:'in the top-left corner',vi:'ở góc trên bên trái',f:'tea',plan:'B',ex:"In Plan B, the morning tea area is in the top-left corner."},
+ {g:'Vị trí',w:'at the bottom of the room',vi:'ở cuối phòng',f:'tea',plan:'A',ex:"In Plan A, the morning tea table is at the bottom of the room."},
+ {g:'Vị trí',w:'to the right of',vi:'ở bên phải của',f:'whiteboard',plan:'A',ex:"In Plan A, the whiteboard is to the right of the presenter's desk."},
+ {g:'Vị trí',w:'to the upper left of',vi:'phía trên bên trái của',f:'whiteboard',plan:'B',ex:"In Plan B, the whiteboard is to the upper left of the presenter's chair."},
+ {g:'Vị trí',w:'adjacent to',vi:'sát cạnh',f:'whiteboard',plan:'B',ex:"In Plan B, the whiteboard is adjacent to the morning tea area."},
+ {g:'Vị trí',w:'U-shaped',vi:'hình chữ U',f:'seating',plan:'A',ex:"In Plan A, the student seating is U-shaped."},
+ {g:'Vị trí',w:'in the centre of',vi:'ở giữa',f:'presenter',plan:'B',ex:"In Plan B, the presenter's chair is in the centre of the desk."}
+];
+document.getElementById('vb').innerHTML=['Thay đổi','Vị trí'].map(g=>`<h3>${g}</h3>`+V.map((w,i)=>w.g===g?`<button class="vw ${w.k||''}" data-w="${i}" aria-pressed="false"><b>${w.w}</b><span>${w.vi}</span></button>`:'').join('')).join('');
+
+function setMode(m){document.body.dataset.mode=m;document.querySelectorAll('.modes button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.mode===m)))}
+function useWord(i){
+  const w=V[i];activeW=i;cur=w.f;
+  if(w.plan&&document.body.dataset.mode!=='both'&&document.body.dataset.mode!==w.plan)setMode(w.plan);
+  render();
+  const tgt=w.plan?document.getElementById('p'+w.plan):document.querySelector('.plans');
+  tgt.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'center'});
+  tgt.classList.add('flash');setTimeout(()=>tgt.classList.remove('flash'),1400);
+}
+function match(el){return cur.startsWith('t:')?el.dataset.t===cur.slice(2):el.dataset.f===cur}
+function featCard(d){return `<h2>${d.n}</h2><span class="tag ${d.t[0]}">${d.t[1]}</span>
+   <div class="cols"><div class="ca"><h3>Plan A</h3><p>${d.a}</p></div><div class="cb"><h3>Plan B</h3><p>${d.b}</p></div></div>
+   <p class="tip">${d.tip}</p><p class="vi">${d.vi}</p>`}
+function typeCard(k){return `<h2>${TY[k]}</h2><span class="tag ${k}">${EN[k]}</span><ul class="tl">${Object.values(F).filter(d=>d.t[0]===k).map(d=>`<li><b>${d.n}</b>: ${d.tip}</li>`).join('')}</ul>`}
+function render(){
+  document.querySelectorAll('svg [data-f]').forEach(el=>{
+    const on=!!cur&&match(el);
+    el.classList.toggle('dim',!!cur&&!on);
+    el.classList.toggle('on',on&&el.tagName!=='text'&&el.tagName!=='g'&&!el.classList.contains('hit')&&!el.classList.contains('ldr'));
+  });
+  document.querySelectorAll('#chips button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.f===cur)));
+  document.querySelectorAll('.vw').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.w===activeW)));
+  let h=cur.startsWith('t:')?typeCard(cur.slice(2)):F[cur]?featCard(F[cur]):document.body.classList.contains('only')?summary():'<p class="empty">Bấm vào một khu vực trên bản đồ, hoặc chọn nút ở trên, để so sánh Plan A và Plan B.</p>';
+  if(activeW>=0){const w=V[activeW];h+=`<p class="vnote"><b>${w.w}</b> (${w.vi}): ${w.ex}</p>`}
+  info.innerHTML=h;
+}
+document.addEventListener('click',e=>{
+  if(e.target.closest('#pop')){if(e.target.closest('.x'))hidePop();return}
+  hidePop();
+  const o=e.target.closest('#onlyChg');
+  if(o){const on=document.body.classList.toggle('only');o.setAttribute('aria-pressed',String(on));render();return}
+  const m=e.target.closest('.modes button');
+  if(m){document.body.dataset.mode=m.dataset.mode;document.querySelectorAll('.modes button').forEach(b=>b.setAttribute('aria-pressed',String(b===m)));return}
+  const v=e.target.closest('.vw');
+  if(v){useWord(+v.dataset.w);return}
+  const t=e.target.closest('[data-f]');
+  if(t){const f=t.dataset.f;activeW=-1;cur=(f&&f!==cur)?f:'';render();const fig=t.closest('figure.plan');if(fig&&cur)showPop(cur,fig,e)}
+});
+render();
+</script>
+</body>
+</html>
