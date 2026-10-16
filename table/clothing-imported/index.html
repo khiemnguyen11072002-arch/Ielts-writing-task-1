@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IELTS Writing Task 1 – Bar Chart: Price of Clothing</title>
+<style>
+:root{--bg:#f3f6f8;--card:#fff;--ink:#14212b;--mut:#5b6b78;--line:#dbe3e8;--c97:#9db4c9;--c03:#0e5a6e;--acc:#d08a0e;--soft:#e9f0f4;color-scheme:light;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f171d;--card:#17222b;--ink:#e6eef3;--mut:#9aabb8;--line:#2a3944;--c97:#6f8aa3;--c03:#4fb3c9;--acc:#f0b43c;--soft:#1f2d38;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f171d;--card:#17222b;--ink:#e6eef3;--mut:#9aabb8;--line:#2a3944;--c97:#6f8aa3;--c03:#4fb3c9;--acc:#f0b43c;--soft:#1f2d38;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif}
+main{max-width:860px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:1.35rem;line-height:1.3;margin:0 0 6px}
+h2{font-size:1.05rem;margin:0 0 10px}
+.task{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--c03);border-radius:6px;padding:12px 14px;margin:14px 0}
+.task p{margin:0 0 6px}.task p:last-child{margin:0;font-weight:600}
+section{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:14px;margin:14px 0}
+.bar-ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
+.bar-ctl .lbl{color:var(--mut);font-size:.85rem}
+button{font:inherit;font-size:.9rem;color:var(--ink);background:var(--soft);border:1px solid var(--line);border-radius:6px;padding:5px 10px;cursor:pointer}
+button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+button[aria-pressed="true"]{border-color:var(--c03);box-shadow:inset 0 0 0 1px var(--c03);font-weight:600}
+.sw{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.wrap{position:relative}
+svg{width:100%;height:auto;display:block}
+svg text{fill:var(--mut);font-size:12px}
+.grid{stroke:var(--line);stroke-width:1}
+.bar{transition:opacity .15s}
+#tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);padding:6px 9px;border-radius:6px;font-size:.82rem;line-height:1.4;opacity:0;transform:translate(-50%,-100%);white-space:nowrap;z-index:2}
+#info{background:var(--soft);border-radius:6px;padding:10px 12px;margin-top:10px;min-height:3.2em}
+#info p{margin:0 0 4px}#info p:last-child{margin:0}
+.say{color:var(--c03);font-weight:600}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .say{color:var(--acc)}}
+:root[data-theme="dark"] .say{color:var(--acc)}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:.92rem}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line)}
+th{color:var(--mut);font-weight:600}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+tr.sel td{background:var(--soft)}
+.up{color:#1c7c4d}.down{color:#b4452f}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .up{color:#5fd39a}:root:not([data-theme="light"]) .down{color:#f08a73}}
+:root[data-theme="dark"] .up{color:#5fd39a}:root[data-theme="dark"] .down{color:#f08a73}
+#keys{display:none;margin-top:10px;padding-left:18px;font-size:.92rem}
+#keys li{margin-bottom:3px}
+.note{color:var(--mut);font-size:.82rem;margin:8px 0 0}
+</style>
+</head>
+<body>
+<main>
+<h1>IELTS Writing Task 1 – Bar Chart</h1>
+<div class="task">
+<p>The chart compares the average cost per kilogram of clothing imported by the European Union from six major source countries in 1997 and 2003.</p>
+<p>Provide an overview of the information by identifying and describing the key details, and include comparisons where appropriate.</p>
+</div>
+
+<section>
+<h2>The average price per kilogram clothing</h2>
+<div class="bar-ctl" id="legend" role="group" aria-label="Legend">
+<span class="lbl">Show:</span>
+<button data-yr="0" aria-pressed="true"><span class="sw" style="background:var(--c97)"></span>1997</button>
+<button data-yr="1" aria-pressed="true"><span class="sw" style="background:var(--c03)"></span>2003</button>
+</div>
+<div class="bar-ctl" id="sorts" role="group" aria-label="Sort">
+<span class="lbl">Sort by:</span>
+<button data-s="def" aria-pressed="true">Original order</button>
+<button data-s="y97" aria-pressed="false">1997 (high → low)</button>
+<button data-s="y03" aria-pressed="false">2003 (high → low)</button>
+<button data-s="chg" aria-pressed="false">Biggest rise → fall</button>
+<button id="hl" aria-pressed="false">Show key features</button>
+</div>
+<div class="wrap" id="wrap"><svg id="chart" viewBox="0 0 720 380" role="img" aria-label="Bar chart of clothing prices per kilogram, 1997 and 2003"></svg><div id="tip"></div></div>
+<ul id="keys"></ul>
+<div id="info"></div>
+<p class="note">Hover a bar for exact values. Click a country to see its change; click a second country to compare. Values are read from the chart (approximate).</p>
+</section>
+
+<section>
+<h2>Difference table</h2>
+<div class="tw"><table id="tbl"><thead><tr><th>Country</th><th class="n">1997 (£)</th><th class="n">2003 (£)</th><th class="n">Change (£)</th><th>Trend</th></tr></thead><tbody></tbody></table></div>
+</section>
+
+</main>
+<script>
+(function(){
+var D=[["Argentina",28,26],["Brazil",23,23],["Japan",15,13],["China",10,17],["India",7,12],["Bangladesh",3,6]];
+var YR=["1997","2003"],vis=[true,true],sortKey="def",hl=false,sel=[];
+var W=720,H=380,L=52,R=16,T=24,B=48,pw=W-L-R,ph=H-T-B;
+function Y(v){return T+ph-v/30*ph}
+function ordered(){var a=D.slice();
+if(sortKey==="y97")a.sort(function(p,q){return q[1]-p[1]});
+if(sortKey==="y03")a.sort(function(p,q){return q[2]-p[2]});
+if(sortKey==="chg")a.sort(function(p,q){return (q[2]-q[1])-(p[2]-p[1])});
+return a}
+function find(n){return D.filter(function(d){return d[0]===n})[0]}
+function trend(d){var c=d[2]-d[1],p=c/d[1]*100;
+if(c===0)return "remained unchanged";
+if(c>0)return p>=90?"doubled (rose sharply)":p>=50?"rose sharply":"rose moderately";
+return p<=-20?"fell noticeably":"fell slightly"}
+function cmp(a,b){if(a===b)return "the same as";var r=Math.max(a,b)/Math.min(a,b),hi=a>b;
+var w=r>=1.8?"roughly double / far "+(hi?"higher":"lower")+" than":r>=1.35?"considerably "+(hi?"higher":"lower")+" than":"slightly "+(hi?"higher":"lower")+" than";
+return w}
+var svg=document.getElementById("chart"),tip=document.getElementById("tip"),wrap=document.getElementById("wrap");
+function keyInfo(){var best=null,low=null;
+D.forEach(function(d){[1,2].forEach(function(k){if(!vis[k-1])return;
+if(!best||d[k]>best.v)best={n:d[0],y:YR[k-1],v:d[k]};
+if(!low||d[k]<low.v)low={n:d[0],y:YR[k-1],v:d[k]}})});
+var rise=D.slice().sort(function(a,b){return (b[2]-b[1])-(a[2]-a[1])})[0];
+return {best:best,low:low,rise:rise}}
+function draw(){var data=ordered(),gw=pw/data.length,h="",i,v,ki=keyInfo();
+for(v=0;v<=30;v+=5){h+='<line class="grid" x1="'+L+'" x2="'+(W-R)+'" y1="'+Y(v)+'" y2="'+Y(v)+'"/><text x="'+(L-8)+'" y="'+(Y(v)+4)+'" text-anchor="end">'+v+'</text>'}
+h+='<text transform="translate('+14+','+(T+ph/2)+') rotate(-90)" text-anchor="middle">Cost in pounds (£)</text>';
+var n=(vis[0]?1:0)+(vis[1]?1:0),bw=Math.min(34,gw/3);
+data.forEach(function(d,i){var x0=L+gw*i,cx=x0+gw/2,isSel=sel.indexOf(d[0])>-1,dim=sel.length&&!isSel;
+if(hl&&ki.rise[0]===d[0]&&vis[0]&&vis[1])h+='<rect x="'+(x0+4)+'" y="'+T+'" width="'+(gw-8)+'" height="'+ph+'" rx="6" fill="var(--acc)" opacity=".13"/>';
+h+='<rect data-c="'+d[0]+'" x="'+x0+'" y="'+T+'" width="'+gw+'" height="'+(ph+30)+'" fill="'+(isSel?'var(--soft)':'transparent')+'" style="cursor:pointer"/>';
+var sx=cx-(n*bw+(n-1)*3)/2;
+[1,2].forEach(function(k){if(!vis[k-1])return;
+var val=d[k],yy=Y(val),mark="";
+var isBest=hl&&ki.best.n===d[0]&&ki.best.y===YR[k-1],isLow=hl&&ki.low.n===d[0]&&ki.low.y===YR[k-1];
+h+='<rect class="bar" data-c="'+d[0]+'" data-k="'+k+'" x="'+sx+'" y="'+yy+'" width="'+bw+'" height="'+(Y(0)-yy)+'" rx="2" fill="'+(k===1?'var(--c97)':'var(--c03)')+'" opacity="'+(dim?.3:1)+'"'+((isBest||isLow)?' stroke="var(--acc)" stroke-width="2.5"':'')+' style="cursor:pointer"/>';
+if(isBest)mark="highest";if(isLow)mark="lowest";
+if(mark)h+='<text x="'+(sx+bw/2)+'" y="'+(yy-6)+'" text-anchor="middle" style="fill:var(--acc);font-weight:700">'+mark+'</text>';
+sx+=bw+3});
+h+='<text x="'+cx+'" y="'+(H-B+20)+'" text-anchor="middle" style="'+(isSel?'fill:var(--ink);font-weight:700':'')+'">'+d[0]+'</text>';
+if(hl&&ki.rise[0]===d[0]&&vis[0]&&vis[1])h+='<text x="'+cx+'" y="'+(H-B+36)+'" text-anchor="middle" style="fill:var(--acc);font-weight:700">biggest rise</text>'});
+h+='<line class="grid" x1="'+L+'" x2="'+(W-R)+'" y1="'+Y(0)+'" y2="'+Y(0)+'" style="stroke:var(--mut)"/>';
+svg.innerHTML=h;table();info();keys()}
+function table(){var tb=document.querySelector("#tbl tbody"),h="";
+ordered().forEach(function(d){var c=d[2]-d[1],cls=c>0?"up":c<0?"down":"";
+h+='<tr class="'+(sel.indexOf(d[0])>-1?"sel":"")+'"><td>'+d[0]+'</td><td class="n">'+d[1]+'</td><td class="n">'+d[2]+'</td><td class="n '+cls+'">'+(c>0?"+":"")+c+'</td><td>'+trend(d)+'</td></tr>'});
+tb.innerHTML=h}
+function info(){var el=document.getElementById("info"),h="";
+if(!sel.length)h="<p>Click a country to see how its price changed, or click two countries to compare them.</p>";
+else if(sel.length===1){var d=find(sel[0]);
+h="<p><b>"+d[0]+":</b> £"+d[1]+" (1997) → £"+d[2]+" (2003).</p><p>Say it: the price of clothing from "+d[0]+" <span class=\"say\">"+trend(d)+"</span>"+(d[2]!==d[1]?" from £"+d[1]+" to £"+d[2]:" at £"+d[1])+".</p>"}
+else{var a=find(sel[0]),b=find(sel[1]);
+[1,2].forEach(function(k){if(!vis[k-1])return;
+h+="<p><b>"+YR[k-1]+":</b> "+a[0]+" (£"+a[k]+") was <span class=\"say\">"+cmp(a[k],b[k])+"</span> "+b[0]+" (£"+b[k]+")"+(a[k]!==b[k]?", a gap of £"+Math.abs(a[k]-b[k]):"")+".</p>"});
+if(vis[0]&&vis[1]){var ga=a[2]-a[1],gb=b[2]-b[1];
+h+="<p>Change: "+a[0]+" "+(ga>0?"+":"")+ga+" vs "+b[0]+" "+(gb>0?"+":"")+gb+" pounds.</p>"}}
+el.innerHTML=h}
+function keys(){var el=document.getElementById("keys");
+if(!hl){el.style.display="none";return}
+var k=keyInfo(),inc=D.filter(function(d){return d[2]>d[1]}).map(function(d){return d[0]}).join(", "),dec=D.filter(function(d){return d[2]<d[1]}).map(function(d){return d[0]}).join(" and ");
+el.style.display="block";
+el.innerHTML="<li>Highest: "+k.best.n+" (£"+k.best.v+", "+k.best.y+") – <i>by far the highest</i></li>"
++"<li>Lowest: "+k.low.n+" (£"+k.low.v+", "+k.low.y+")</li>"
++"<li>Biggest rise: "+k.rise[0]+" (£"+k.rise[1]+" → £"+k.rise[2]+")</li>"
++"<li>Rises: "+inc+" · Falls: "+dec+" · Unchanged: Brazil</li>"}
+function tipShow(e){var t=e.target.closest("[data-c]");if(!t){tip.style.opacity=0;return}
+var d=find(t.getAttribute("data-c")),k=t.getAttribute("data-k"),h="<b>"+d[0]+"</b>";
+if(k)h+="<br>"+YR[k-1]+": £"+d[k];
+else{[1,2].forEach(function(j){if(vis[j-1])h+="<br>"+YR[j-1]+": £"+d[j]})}
+tip.innerHTML=h;var r=wrap.getBoundingClientRect();
+tip.style.left=Math.min(Math.max(e.clientX-r.left,50),r.width-50)+"px";tip.style.top=(e.clientY-r.top-10)+"px";tip.style.opacity=1}
+svg.addEventListener("pointermove",tipShow);
+svg.addEventListener("pointerleave",function(){tip.style.opacity=0});
+svg.addEventListener("click",function(e){var t=e.target.closest("[data-c]");if(!t)return;
+var n=t.getAttribute("data-c"),i=sel.indexOf(n);
+if(i>-1)sel.splice(i,1);else{sel.push(n);if(sel.length>2)sel.shift()}
+draw()});
+document.getElementById("legend").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;
+var k=+b.getAttribute("data-yr");if(vis[k]&&!vis[1-k])return;
+vis[k]=!vis[k];b.setAttribute("aria-pressed",vis[k]);draw()});
+document.getElementById("sorts").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;
+if(b.id==="hl"){hl=!hl;b.setAttribute("aria-pressed",hl)}
+else if(b.getAttribute("data-s")){sortKey=b.getAttribute("data-s");
+document.querySelectorAll("#sorts [data-s]").forEach(function(x){x.setAttribute("aria-pressed",x===b)})}
+draw()});
+draw();
+})();
+</script>
+</body>
+</html>
