@@ -1,145 +1,141 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
+<html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Reasons for immigrants, 2009</title>
+<meta name="color-scheme" content="light dark">
+<title>IELTS Task 1 – Pie Charts: Reasons for Immigration, 2009</title>
 <style>
-:root{--bg:#fff;--fg:#1c1c1c;--muted:#555;--card:#f6f6f6;--line:#ddd;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17181a;--fg:#f0f0f0;--muted:#aaa;--card:#222427;--line:#3a3d41}}
-:root[data-theme="dark"]{--bg:#17181a;--fg:#f0f0f0;--muted:#aaa;--card:#222427;--line:#3a3d41}
+:root{--bg:#fff;--fg:#1f2430;--mut:#667085;--card:#f3f5f9;--bd:#d5dbe6;--acc:#2f6fed;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14171f;--fg:#e8ebf2;--mut:#9aa3b5;--card:#1d222d;--bd:#323a4b;--acc:#6f9bff}}
+:root[data-theme="dark"]{--bg:#14171f;--fg:#e8ebf2;--mut:#9aa3b5;--card:#1d222d;--bd:#323a4b;--acc:#6f9bff}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font-family:"Helvetica Neue",Arial,sans-serif;padding:20px}
-.wrap{max-width:900px;margin:0 auto}
-.task{font-weight:600;font-size:15px;line-height:1.4;margin:0 0 16px}
-.charts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.chart{text-align:center}
-.chart h2{font-size:clamp(15px,2.4vw,20px);font-weight:600;margin:0 0 6px;line-height:1.3}
-svg{width:100%;height:auto;max-width:340px;overflow:visible}
-.slice{cursor:pointer;transition:transform .2s ease,opacity .2s ease}
-.slice path{stroke:var(--bg);stroke-width:1}
-.slice text{fill:#fff;font-size:15px;font-weight:600;pointer-events:none}
-.dim{opacity:.35}
-.legend{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 22px;margin:18px 0 12px}
-.item{display:flex;align-items:center;gap:8px;font-size:16px;cursor:pointer;padding:4px 8px;border-radius:6px;border:1px solid transparent;background:none;color:var(--fg);font-family:inherit}
-.item i{width:18px;height:18px;display:inline-block;border-radius:2px}
-.item:hover,.item.on{background:var(--card);border-color:var(--line)}
-.item:focus-visible{outline:2px solid #2f5cf0}
-.detail{background:var(--card);border-radius:8px;padding:12px 16px;font-size:15px;text-align:center;min-height:48px;color:var(--muted)}
-.detail b{color:var(--fg)}
-#tip{position:fixed;pointer-events:none;background:#222;color:#fff;font-size:13px;padding:7px 10px;border-radius:6px;line-height:1.4;opacity:0;transition:opacity .1s;z-index:9;max-width:220px}
-.detail .say{text-align:left;margin-top:8px;line-height:1.6;color:var(--fg)}
-.detail .say i{font-style:normal;font-weight:600}
-.cmp{width:100%;border-collapse:collapse;margin-top:16px;font-size:15px}
-.cmp th,.cmp td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:center}
-.cmp th:first-child,.cmp td:first-child{text-align:left}
-.cmp th{font-size:13px;color:var(--muted);font-weight:600}
-.cmp tbody tr{cursor:pointer}
-.cmp tbody tr:hover,.cmp tbody tr.on{background:var(--card)}
-.cmp i.sw{width:12px;height:12px;display:inline-block;border-radius:2px;margin-right:8px}
-.cmp .big{font-weight:700;background:#fff3c4;color:#222;border-radius:4px}
-.note{font-size:13px;color:var(--muted);margin:8px 0 0}
-@media (max-width:560px){.charts{grid-template-columns:1fr}}
-</style>
-</head>
-<body>
-<div class="wrap">
-<p class="task">The pie charts show the reasons for immigrants to a European country in 2009 and reasons for immigrants from a European country in 2009. Summarize the information by selecting and reporting the main features, and make comparisons where relevant.</p>
-<div class="charts" id="charts"></div>
-<div class="legend" id="legend"></div>
-<div class="detail" id="detail">Hover over a slice or legend item, and click to select it.</div>
-<table class="cmp" id="cmp"><thead><tr><th>Reason</th><th>From (%)</th><th>To (%)</th><th>Difference</th></tr></thead><tbody></tbody></table>
-<p class="note">Difference = From &minus; To, in percentage points. Gaps of 8 points or more are highlighted: good candidates for your main features.</p>
-</div>
-<div id="tip"></div>
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:980px;margin:0 auto;padding:16px}
+h1{font-size:20px;margin:0 0 8px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:10px 14px;margin:10px 0}
+nav{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
+button,select,input{font:inherit;color:var(--fg)}
+.btn,nav button,.lg,.chip{border:1px solid var(--bd);background:var(--card);padding:6px 12px;border-radius:8px;cursor:pointer}
+nav button.on,.btn.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.tab{display:none}.tab.on{display:block}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;max-width:700px;margin:0 auto}
+.pie{width:100%;height:auto;display:block}
+.yr{font:700 12.5px system-ui;fill:var(--fg)}
+.sl{cursor:pointer;transition:transform .15s,opacity .15s}
+.sl.dim{opacity:.3}.sl.hv{transform:translate(var(--tx),var(--ty))}
+.sl text{font-weight:700;font-family:system-ui;pointer-events:none}
+.cap{text-align:center;font-size:12px;color:var(--mut);min-height:18px}
+.dot{width:12px;height:12px;border-radius:3px;display:inline-block;vertical-align:-1px;margin-right:6px}
+.lg.off{opacity:.45;text-decoration:line-through}
+.ro{min-height:48px}
+textarea{width:100%;min-height:150px;padding:10px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--fg);font:inherit}
+.chip{padding:3px 10px;font-size:13px;border-radius:14px}
+.chip:hover{border-color:var(--acc)}
+h3{font-size:14px;margin:10px 0 4px}
+.m-inc{border:2px solid #00c853!important}.m-skip{border:2px solid #ff1744!important}.m-cmp{border:2px solid #2979ff!important}
+.m-inc.on{background:#00c853!important}.m-skip.on{background:#ff1744!important}.m-cmp.on{background:#2979ff!important}
+.sc{overflow-x:auto}
+</style></head><body><main>
+<h1>Pie Charts: Reasons for Immigrants To and From a European Country, 2009</h1>
+<div class="card"><b>Task:</b> The pie charts show the reasons for immigrants to a European country in 2009 and reasons for immigrants from a European country in 2009. Summarize the information by selecting and reporting the main features, and make comparisons where relevant.</div>
+<nav>
+<button class="on" data-t="x">Explore</button>
+<button data-t="k">Key Features &amp; Notes</button>
+<button data-t="c">Compare</button>
+</nav>
+
+<section class="tab on" id="t-x">
+<div class="row" id="lgx"></div>
+<div class="row"><button class="btn" id="bext">Show largest / smallest</button></div>
+<div class="grid" id="gx"></div>
+<div class="card ro" id="ro"></div>
+</section>
+
+<section class="tab" id="t-k">
+<div class="row" id="lgk"></div>
+<div class="row"><b>Mark a slice:</b>
+<button class="btn m-inc on" data-m="inc">✔ Include</button>
+<button class="btn m-skip" data-m="skip">✖ Skip</button>
+<button class="btn m-cmp" data-m="cmp">⇄ Compare</button>
+<button class="btn" id="bclr">Clear marks</button></div>
+<div class="grid" id="gk"></div>
+<h3>Your notes (key features, comparisons)</h3>
+<textarea id="notes" placeholder="Type your own notes here. Click a phrase below to add it."></textarea>
+<div id="bank"></div>
+</section>
+
+<section class="tab" id="t-c">
+<div class="card"><b>Choose groups</b>
+<div class="row" id="ck"></div></div>
+<div class="card"><b>Bar chart</b>
+<div class="sc"><svg id="bars" viewBox="0 0 640 270" style="width:100%;min-width:460px;height:auto"></svg></div>
+<div class="cap">Solid bar = to a European country · Light bar = from a European country</div></div>
+</section>
+
 <script>
-const cats=[
-{k:"definite job",c:"#2eb04a",to:23,from:38},
-{k:"look for job",c:"#2f5cf0",to:15,from:13},
-{k:"study",c:"#f06ae8",to:15,from:7},
-{k:"accompany / family",c:"#e8262a",to:25,from:15},
-{k:"other reasons",c:"#fb9a1f",to:15,from:23},
-{k:"no reason",c:"#8a4fe0",to:7,from:4}];
-const charts=[{key:"to",title:"Reasons for immigrants to a European Country in 2009"},
-{key:"from",title:"Reasons for immigrants from a European Country in 2009"}];
-const NS="http://www.w3.org/2000/svg",R=100;
-let selected=null,hover=null;
-const slices={to:[],from:[]};
-const tip=document.getElementById("tip"),detail=document.getElementById("detail");
+const G=["To a European country","From a European country"];
+const C=["definite job","look for job","study","accompany / family","other reasons","no reason"];
+const COL=["#2fb457","#2f7bf5","#e55be6","#e8281f","#ffa41f","#8a52e0"];
+const D=[[23,15,15,25,15,7],[38,13,7,15,23,4]];
+const MC={inc:"#00c853",skip:"#ff1744",cmp:"#2979ff"};
+const st={hid:new Set(),ext:false,mode:"inc",marks:{}};
+const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
+const P=(r,q)=>[100+r*Math.cos(q),112+r*Math.sin(q)];
 
-function pt(a,r){return[r*Math.sin(a),-r*Math.cos(a)]}
-charts.forEach(ch=>{
- const box=document.createElement("div");box.className="chart";
- box.innerHTML="<h2>"+ch.title+"</h2>";
- const svg=document.createElementNS(NS,"svg");svg.setAttribute("viewBox","-125 -125 250 250");
- svg.setAttribute("role","img");svg.setAttribute("aria-label",ch.title);
- let a0=0;const total=cats.reduce((s,d)=>s+d[ch.key],0);
- cats.forEach((d,i)=>{
-  const a1=a0+d[ch.key]/total*2*Math.PI,mid=(a0+a1)/2;
-  const [x0,y0]=pt(a0,R),[x1,y1]=pt(a1,R),large=a1-a0>Math.PI?1:0;
-  const g=document.createElementNS(NS,"g");g.setAttribute("class","slice");
-  const p=document.createElementNS(NS,"path");
-  p.setAttribute("d",`M0 0L${x0} ${y0}A${R} ${R} 0 ${large} 1 ${x1} ${y1}Z`);p.setAttribute("fill",d.c);
-  const [lx,ly]=pt(mid,R*0.62);
-  const t=document.createElementNS(NS,"text");t.setAttribute("x",lx);t.setAttribute("y",ly);
-  t.setAttribute("text-anchor","middle");t.setAttribute("dominant-baseline","middle");t.textContent=d[ch.key]+"%";
-  g.append(p,t);svg.appendChild(g);
-  g.dataset.dx=Math.sin(mid)*12;g.dataset.dy=-Math.cos(mid)*12;
-  g.addEventListener("mouseenter",()=>{hover=i;render()});
-  g.addEventListener("mousemove",e=>showTip(e,ch,d));
-  g.addEventListener("mouseleave",()=>{hover=null;hideTip();render()});
-  g.addEventListener("click",e=>{toggle(i);showTip(e,ch,d)});
-  slices[ch.key].push(g);a0=a1;
- });
- box.appendChild(svg);document.getElementById("charts").appendChild(box);
-});
-
-const legend=document.getElementById("legend");
-cats.forEach((d,i)=>{
- const b=document.createElement("button");b.className="item";b.type="button";
- b.innerHTML=`<i style="background:${d.c}"></i>${d.k}`;
- b.addEventListener("mouseenter",()=>{hover=i;render()});
- b.addEventListener("mouseleave",()=>{hover=null;render()});
- b.addEventListener("click",()=>toggle(i));
- legend.appendChild(b);
-});
-
-function toggle(i){selected=selected===i?null:i;render()}
-function showTip(e,ch,d){
- tip.innerHTML=`<b>${d.k}</b><br>${ch.key==="to"?"Immigrants to":"Immigrants from"}: ${d[ch.key]}%`;
- tip.style.opacity=1;
- const x=Math.min(e.clientX+14,innerWidth-230);tip.style.left=x+"px";tip.style.top=(e.clientY+14)+"px";
+function pie(y,t){
+  const d=D[y],vs=d.filter((v,i)=>!st.hid.has(i)),mx=Math.max(...vs),mn=Math.min(...vs);
+  let a=-Math.PI/2,body="";
+  d.forEach((v,i)=>{
+    const b=a+v/50*Math.PI,m=(a+b)/2,[x0,y0]=P(76,a),[x1,y1]=P(76,b),[lx,ly]=P(v<8?64:48,m),h=st.hid.has(i),mk=t=="k"&&st.marks[y+"-"+i];
+    let ring='stroke="var(--bg)" stroke-width="1.5"';
+    if(mk)ring=`stroke="${MC[mk]}" stroke-width="5"`;
+    else if(t=="x"&&st.ext&&!h&&(v==mx||v==mn))ring=`stroke="var(--fg)" stroke-width="3"${v==mn&&v!=mx?' stroke-dasharray="5 3"':""}`;
+    body+=`<g class="sl" data-i="${i}" data-y="${y}" style="--tx:${7*Math.cos(m)}px;--ty:${7*Math.sin(m)}px"><path d="M100 112L${x0} ${y0}A76 76 0 ${v>50?1:0} 1 ${x1} ${y1}Z" fill="${h?"var(--bd)":COL[i]}" ${ring} stroke-linejoin="round"/><text x="${lx}" y="${ly+4}" text-anchor="middle" font-size="${v<8?10:12}" fill="${i==4?"#222":"#fff"}">${h?"":v+"%"}</text></g>`;
+    a=b});
+  let cap="";
+  if(t=="x"&&st.ext&&vs.length){const iM=d.findIndex((v,i)=>!st.hid.has(i)&&v==mx),im=d.findIndex((v,i)=>!st.hid.has(i)&&v==mn);cap=`Largest: ${C[iM]} ${mx}% · Smallest: ${C[im]} ${mn}%`}
+  return `<div><svg class="pie" viewBox="0 0 200 224"><text class="yr" x="100" y="16" text-anchor="middle">${G[y]}</text>${body}</svg><div class="cap">${cap}</div></div>`;
 }
-function hideTip(){tip.style.opacity=0}
-function render(){
- const focus=hover!==null?hover:selected;
- charts.forEach(ch=>slices[ch.key].forEach((g,i)=>{
-  g.classList.toggle("dim",focus!==null&&focus!==i);
-  g.style.transform=selected===i?`translate(${g.dataset.dx}px,${g.dataset.dy}px)`:"none";
- }));
- [...legend.children].forEach((b,i)=>b.classList.toggle("on",selected===i));
- const s=selected;
- rows.forEach((r,i)=>r.classList.toggle("on",s===i));
- if(s===null){detail.innerHTML="Hover over a slice or legend item, and click to select it.";return}
- const d=cats[s],df=diff(d),K=d.k[0].toUpperCase()+d.k.slice(1);
- const c=Math.abs(df)>=8?"considerably":Math.abs(df)>=3?"slightly":null;
- const cm=c===null?"The two figures were almost identical.":`The proportion was ${c} ${df>0?"higher":"lower"} for immigrants from the country (${df>0?"+":"−"}${Math.abs(df)} points).`;
- detail.innerHTML=`<b>${d.k}</b> &mdash; to: <b>${d.to}%</b> &nbsp;|&nbsp; from: <b>${d.from}%</b>`+
-  `<div class="say">&bull; To: <i>${say[d.to]}</i> (${d.to}%)<br>&bull; From: <i>${say[d.from]}</i> (${d.from}%)<br>&bull; ${cm}<br>&bull; Model sentence: <i>${K} accounted for ${say[d.to]} of immigrants to the country, compared with ${say[d.from]} of those leaving.</i></div>`;
+function draw(){$("#gx").innerHTML=[0,1].map(y=>pie(y,"x")).join("");$("#gk").innerHTML=[0,1].map(y=>pie(y,"k")).join("")}
+
+function setHv(i){
+  $$("#gx .sl").forEach(g=>{const o=+g.dataset.i;g.classList.toggle("hv",o==i);g.classList.toggle("dim",i>=0&&o!=i)});
+  if(i<0){$("#ro").innerHTML="Hover over a slice or a legend item to compare the two pies.";return}
+  const a=D[0][i],b=D[1][i],d=b-a;
+  $("#ro").innerHTML=`<b style="border-bottom:3px solid ${COL[i]}">${C[i]}</b>: to a European country <b>${a}%</b> · from a European country <b>${b}%</b> &nbsp;(${d==0?"same proportion":`${Math.abs(d)} percentage points ${d>0?"higher":"lower"} for immigrants from`})`;
 }
-const say={4:"a tiny minority",7:"fewer than one in ten",13:"roughly one in eight",15:"around one in seven",23:"just under a quarter",25:"exactly a quarter",38:"just over a third"};
-const diff=d=>d.from-d.to;
-const rows=[];
-cats.forEach((d,i)=>{
- const df=diff(d),tr=document.createElement("tr");
- tr.innerHTML=`<td><i class="sw" style="background:${d.c}"></i>${d.k}</td><td>${d.from}</td><td>${d.to}</td><td><span class="${Math.abs(df)>=8?"big":""}">&nbsp;${df>0?"+":df<0?"−":""}${Math.abs(df)}&nbsp;</span></td>`;
- tr.addEventListener("mouseenter",()=>{hover=i;render()});
- tr.addEventListener("mouseleave",()=>{hover=null;render()});
- tr.addEventListener("click",()=>toggle(i));
- document.querySelector("#cmp tbody").appendChild(tr);rows.push(tr);
-});
-document.addEventListener("click",e=>{if(!e.target.closest(".slice"))hideTip()});
-</script>
-</body>
-</html>
+$("#lgx").innerHTML=C.map((c,i)=>`<button class="lg" data-i="${i}"><span class="dot" style="background:${COL[i]}"></span>${c}</button>`).join("");
+$("#lgk").innerHTML=C.map((c,i)=>`<span><span class="dot" style="background:${COL[i]}"></span>${c}</span>`).join(" &nbsp; ");
+$("#lgx").onclick=e=>{const b=e.target.closest(".lg");if(!b)return;const i=+b.dataset.i;st.hid.has(i)?st.hid.delete(i):st.hid.add(i);b.classList.toggle("off");draw();setHv(-1)};
+$("#lgx").onmouseover=e=>{const b=e.target.closest(".lg");if(b)setHv(+b.dataset.i)};
+$("#lgx").onmouseleave=()=>setHv(-1);
+$("#gx").onmouseover=e=>{const g=e.target.closest(".sl");if(g)setHv(+g.dataset.i)};
+$("#gx").onmouseleave=()=>setHv(-1);
+$("#bext").onclick=e=>{st.ext=!st.ext;e.target.classList.toggle("on",st.ext);draw();setHv(-1)};
+
+$("#gk").onclick=e=>{const g=e.target.closest(".sl");if(!g)return;const k=g.dataset.y+"-"+g.dataset.i;st.marks[k]==st.mode?delete st.marks[k]:st.marks[k]=st.mode;draw()};
+$$("[data-m]").forEach(b=>b.onclick=()=>{st.mode=b.dataset.m;$$("[data-m]").forEach(x=>x.classList.toggle("on",x==b))});
+$("#bclr").onclick=()=>{st.marks={};draw()};
+
+const BANK={"Proportions":["accounted for","made up","constituted","the largest share","the smallest proportion","just under a quarter","just over a third","nearly half","roughly one in five","a little more than half","a negligible share"],
+"Comparison":["whereas","while","in contrast","by contrast","twice as high as","three times as large as","the same proportion as","slightly higher than","considerably lower than","far fewer … than","the gap between … and …"],
+"Describing the reasons":["the most common reason","the main reason for migrating","to take up a definite job","to look for work","to accompany family members","for study purposes","for other reasons","for no particular reason"]};
+$("#bank").innerHTML=Object.entries(BANK).map(([k,v])=>`<h3>${k}</h3><div class="row">`+v.map(t=>`<button class="chip">${t}</button>`).join("")+`</div>`).join("");
+$("#bank").onclick=e=>{const c=e.target.closest(".chip");if(!c)return;const n=$("#notes");n.value+=(n.value&&!/\s$/.test(n.value)?" ":"")+c.textContent+" ";n.focus()};
+
+$("#ck").innerHTML=C.map((c,i)=>`<label><input type="checkbox" checked data-i="${i}"> <span class="dot" style="background:${COL[i]}"></span>${c}</label>`).join(" &nbsp; ");
+function bars(){
+  const s=[...$$("#ck input:checked")].map(x=>+x.dataset.i),n=s.length||1,gw=580/n,w=Math.min(34,gw/2-6),V=v=>210-v/40*170;let h="";
+  [0,10,20,30,40].forEach(v=>h+=`<line x1="40" x2="630" y1="${V(v)}" y2="${V(v)}" stroke="var(--bd)"/><text x="34" y="${V(v)+4}" text-anchor="end" font-size="11" fill="var(--mut)">${v}%</text>`);
+  s.forEach((i,gi)=>{
+    const cx=45+gi*gw+gw/2,k=C[i].lastIndexOf(" "),l=k>0?[C[i].slice(0,k),C[i].slice(k+1)]:[C[i]];
+    h+=l.map((t,j)=>`<text x="${cx}" y="${230+j*14}" text-anchor="middle" font-size="12" fill="var(--fg)">${t}</text>`).join("");
+    [0,1].forEach(y=>{const v=D[y][i],x=cx+(y?2:-w-2),bh=v/40*170;
+      h+=`<rect x="${x}" y="${V(v)}" width="${w}" height="${bh}" fill="${COL[i]}" ${y?`fill-opacity=".4" stroke="${COL[i]}" stroke-width="2"`:""}/><text x="${x+w/2}" y="${V(v)-5}" text-anchor="middle" font-size="11" fill="var(--fg)">${v}</text>`})});
+  $("#bars").innerHTML=h;
+}
+$("#ck").onchange=bars;
+$$("nav button").forEach(b=>b.onclick=()=>{$$("nav button").forEach(x=>x.classList.toggle("on",x==b));$$(".tab").forEach(t=>t.classList.toggle("on",t.id=="t-"+b.dataset.t))});
+draw();setHv(-1);bars();
+</script></main></body></html>
