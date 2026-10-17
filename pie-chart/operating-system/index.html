@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>IELTS Task 1 – Pie Charts: Operating Systems</title>
+<style>
+:root{--bg:#fff;--fg:#1f2430;--mut:#667085;--card:#f3f5f9;--bd:#d5dbe6;--acc:#2f6fed;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14171f;--fg:#e8ebf2;--mut:#9aa3b5;--card:#1d222d;--bd:#323a4b;--acc:#6f9bff}}
+:root[data-theme="dark"]{--bg:#14171f;--fg:#e8ebf2;--mut:#9aa3b5;--card:#1d222d;--bd:#323a4b;--acc:#6f9bff}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:980px;margin:0 auto;padding:16px}
+h1{font-size:20px;margin:0 0 8px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:10px 14px;margin:10px 0}
+nav{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
+button,select,input{font:inherit;color:var(--fg)}
+.btn,nav button,.lg,.chip,select,input[type=number]{border:1px solid var(--bd);background:var(--card);padding:6px 12px;border-radius:8px;cursor:pointer}
+nav button.on,.btn.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.tab{display:none}.tab.on{display:block}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;max-width:640px;margin:0 auto}
+.pie{width:100%;height:auto;display:block}
+.yr{font:700 15px system-ui;fill:var(--fg)}
+.sl{cursor:pointer;transition:transform .15s,opacity .15s}
+.sl.dim{opacity:.3}.sl.hv{transform:translate(var(--tx),var(--ty))}
+.sl text{font:700 12px system-ui;pointer-events:none}
+.cap{text-align:center;font-size:12px;color:var(--mut);min-height:18px}
+.dot{width:12px;height:12px;border-radius:3px;display:inline-block;vertical-align:-1px;margin-right:6px}
+.lg.off{opacity:.45;text-decoration:line-through}
+.ro{min-height:48px}
+textarea{width:100%;min-height:150px;padding:10px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--fg);font:inherit}
+.chip{padding:3px 10px;font-size:13px;border-radius:14px}
+.chip:hover{border-color:var(--acc)}
+h3{font-size:14px;margin:10px 0 4px}
+.m-inc{border:2px solid #00c853!important}.m-skip{border:2px solid #ff1744!important}.m-cmp{border:2px solid #2979ff!important}
+.m-inc.on{background:#00c853!important}.m-skip.on{background:#ff1744!important}.m-cmp.on{background:#2979ff!important}
+.sc{overflow-x:auto}
+.tl{transition:opacity .15s;cursor:pointer}.tl.dim{opacity:.2}.vl{opacity:0;font:700 11px system-ui;pointer-events:none}.tl.hv .vl{opacity:1}.tl.hv polyline{stroke-width:5}
+</style></head><body><main>
+<h1>Pie Charts: Global Market Share of Operating Systems, 2012–2015</h1>
+<div class="card"><b>Task:</b> The charts below show the global market ratio of the three computer operating systems compared to others from 2012 to 2015. Summarise the information by selecting and reporting the main features, and make comparisons where relevant.</div>
+<nav>
+<button class="on" data-t="x">Explore</button>
+<button data-t="k">Key Features &amp; Notes</button>
+<button data-t="c">Compare</button>
+</nav>
+
+<section class="tab on" id="t-x">
+<div class="row" id="lgx"></div>
+<div class="row"><button class="btn" id="bext">Show largest / smallest</button></div>
+<div class="grid" id="gx"></div>
+<div class="card ro" id="ro"></div>
+</section>
+
+<section class="tab" id="t-k">
+<div class="row" id="lgk"></div>
+<div class="row"><b>Mark a slice:</b>
+<button class="btn m-inc on" data-m="inc">✔ Include</button>
+<button class="btn m-skip" data-m="skip">✖ Skip</button>
+<button class="btn m-cmp" data-m="cmp">⇄ Compare</button>
+<button class="btn" id="bclr">Clear marks</button></div>
+<div class="grid" id="gk"></div>
+<h3>Your notes (key features, trends, comparisons)</h3>
+<textarea id="notes" placeholder="Type your own notes here. Click a phrase below to add it."></textarea>
+<div id="bank"></div>
+</section>
+
+<section class="tab" id="t-c">
+<div class="card"><b>Choose groups</b>
+<div class="row" id="ck"></div></div>
+<div class="card"><b>Trend view</b>
+<div class="sc"><svg id="trs" viewBox="0 0 640 300" style="width:100%;max-width:700px;min-width:420px;display:block;margin:0 auto"></svg></div>
+<div id="tro" style="min-height:24px"></div></div>
+<div class="card"><b>Bar chart</b>
+<div class="sc"><svg id="bars" viewBox="0 0 600 250" style="width:100%;min-width:420px;height:auto"></svg></div>
+</div>
+
+</section>
+
+<script>
+const Y=[2012,2013,2014,2015],C=["OS 1","OS 2","OS 3","Others"],COL=["#5fc19a","#f0622f","#4b46c4","#fbbb1c"];
+const D={2012:[20,17,15,48],2013:[38,17,10,35],2014:[47,18,12,23],2015:[52,18,15,15]};
+const MC={inc:"#00c853",skip:"#ff1744",cmp:"#2979ff"};
+const st={hid:new Set(),ext:false,guides:false,mode:"inc",marks:{}};
+const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
+const fmt=n=>n>0?"+"+n:""+n;
+const P=(r,q)=>[100+r*Math.cos(q),112+r*Math.sin(q)];
+function trend(){
+  const X=y=>70+Y.indexOf(y)*170,V=v=>260-v/60*220;let s="";
+  [0,10,20,30,40,50,60].forEach(v=>s+=`<line x1="60" x2="600" y1="${V(v)}" y2="${V(v)}" stroke="var(--bd)"/><text x="52" y="${V(v)+4}" text-anchor="end" font-size="11" fill="var(--mut)">${v}%</text>`);
+  Y.forEach(y=>s+=`<text x="${X(y)}" y="286" text-anchor="middle" font-size="13" fill="var(--fg)">${y}</text>`);
+  [...$$("#ck input:checked")].map(x=>+x.dataset.i).forEach(i=>{
+    const pts=Y.map(y=>X(y)+","+V(D[y][i])).join(" ");
+    s+=`<g class="tl" data-i="${i}"><polyline points="${pts}" fill="none" stroke="${COL[i]}" stroke-width="3.5" stroke-linejoin="round"/>`+Y.map(y=>`<circle cx="${X(y)}" cy="${V(D[y][i])}" r="6" fill="${COL[i]}" stroke="var(--bg)" stroke-width="2"/><text class="vl" x="${X(y)}" y="${V(D[y][i])+(i==2?20:-11)}" text-anchor="middle" fill="var(--fg)">${D[y][i]}%</text>`).join("")+`</g>`});
+  $("#trs").innerHTML=s}
+function trHv(i){$$("#trs .tl").forEach(g=>{const o=+g.dataset.i;g.classList.toggle("hv",o==i);g.classList.toggle("dim",i>=0&&o!=i)});
+  $("#tro").innerHTML=i<0?"Hover over a line to read its values across the four years.":`<b style="border-bottom:3px solid ${COL[i]}">${C[i]}</b>: `+Y.map(y=>`${y} <b>${D[y][i]}%</b>`).join(" → ")}
+$("#trs").onmouseover=e=>{const g=e.target.closest(".tl");if(g)trHv(+g.dataset.i)};
+$("#trs").onmouseleave=()=>trHv(-1);
+
+function pie(y,t){
+  const d=D[y],vs=d.filter((v,i)=>!st.hid.has(i)),mx=Math.max(...vs),mn=Math.min(...vs);
+  let a=-Math.PI/2,g="";
+  if(t=="x"&&st.guides){for(let k=0;k<4;k++){const q=-Math.PI/2+k*Math.PI/2,[x,yy]=P(84,q),[lx,ly]=P(94,q);
+    g+=`<line x1="100" y1="112" x2="${x}" y2="${yy}" stroke="var(--fg)" stroke-dasharray="3 3" stroke-width="1" opacity=".7"/>`+(k?`<text x="${lx}" y="${ly+3}" text-anchor="middle" font-size="9" fill="var(--mut)">${k*25}%</text>`:"")}}
+  let body="";
+  d.forEach((v,i)=>{
+    const b=a+v/50*Math.PI,m=(a+b)/2,[x0,y0]=P(76,a),[x1,y1]=P(76,b),[lx,ly]=P(48,m),h=st.hid.has(i),mk=t=="k"&&st.marks[y+"-"+i];
+    let ring='stroke="var(--bg)" stroke-width="1.5"';
+    if(mk)ring=`stroke="${MC[mk]}" stroke-width="5"`;
+    else if(t=="x"&&st.ext&&!h&&(v==mx||v==mn))ring=`stroke="var(--fg)" stroke-width="3"${v==mn&&v!=mx?' stroke-dasharray="5 3"':""}`;
+    body+=`<g class="sl" data-i="${i}" data-y="${y}" style="--tx:${7*Math.cos(m)}px;--ty:${7*Math.sin(m)}px"><path d="M100 112L${x0} ${y0}A76 76 0 ${v>50?1:0} 1 ${x1} ${y1}Z" fill="${h?"var(--bd)":COL[i]}" ${ring} stroke-linejoin="round"/><text x="${lx}" y="${ly+4}" text-anchor="middle" fill="${i==3?"#222":"#fff"}">${h?"":v+"%"}</text></g>`;
+    a=b});
+  let cap="";
+  if(t=="x"&&st.ext&&vs.length){const iM=d.findIndex((v,i)=>!st.hid.has(i)&&v==mx),im=d.findIndex((v,i)=>!st.hid.has(i)&&v==mn);cap=`Largest: ${C[iM]} ${mx}% · Smallest: ${C[im]} ${mn}%`}
+  return `<div><svg class="pie" viewBox="0 0 200 224"><text class="yr" x="100" y="16" text-anchor="middle">${y}</text>${body}${g}</svg><div class="cap">${cap}</div></div>`;
+}
+function draw(){$("#gx").innerHTML=Y.map(y=>pie(y,"x")).join("");$("#gk").innerHTML=Y.map(y=>pie(y,"k")).join("")}
+
+function setHv(i){
+  $$("#gx .sl").forEach(g=>{const o=+g.dataset.i;g.classList.toggle("hv",o==i);g.classList.toggle("dim",i>=0&&o!=i)});
+  $("#ro").innerHTML=i<0?"Hover over a slice or a legend item to read its values across the four years.":
+   `<b style="border-bottom:3px solid ${COL[i]}">${C[i]}</b>: `+Y.map(y=>`${y} <b>${D[y][i]}%</b>`).join(" → ")+` &nbsp;(${fmt(D[2015][i]-D[2012][i])} percentage points overall)`;
+}
+$("#lgx").innerHTML=C.map((c,i)=>`<button class="lg" data-i="${i}"><span class="dot" style="background:${COL[i]}"></span>${c}</button>`).join("");
+$("#lgk").innerHTML=C.map((c,i)=>`<span><span class="dot" style="background:${COL[i]}"></span>${c}</span>`).join(" &nbsp; ");
+$("#lgx").onclick=e=>{const b=e.target.closest(".lg");if(!b)return;const i=+b.dataset.i;st.hid.has(i)?st.hid.delete(i):st.hid.add(i);b.classList.toggle("off");draw();setHv(-1)};
+$("#lgx").onmouseover=e=>{const b=e.target.closest(".lg");if(b)setHv(+b.dataset.i)};
+$("#lgx").onmouseleave=()=>setHv(-1);
+$("#gx").onmouseover=e=>{const g=e.target.closest(".sl");if(g)setHv(+g.dataset.i)};
+$("#gx").onmouseleave=()=>setHv(-1);
+$("#bext").onclick=e=>{st.ext=!st.ext;e.target.classList.toggle("on",st.ext);draw();setHv(-1)};
+
+$("#gk").onclick=e=>{const g=e.target.closest(".sl");if(!g)return;const k=g.dataset.y+"-"+g.dataset.i;st.marks[k]==st.mode?delete st.marks[k]:st.marks[k]=st.mode;draw()};
+$$("[data-m]").forEach(b=>b.onclick=()=>{st.mode=b.dataset.m;$$("[data-m]").forEach(x=>x.classList.toggle("on",x==b))});
+$("#bclr").onclick=()=>{st.marks={};draw()};
+
+const BANK={"Proportions":["accounted for","made up","constituted","the largest share","the smallest proportion","just under a quarter","just over a third","nearly half","roughly one in five","a little more than half","a negligible share"],
+"Change & trend":["rose sharply","climbed steadily","more than doubled","fell dramatically","dropped to","remained stable at","fluctuated at","overtook","peaked at","bottomed out at"],
+"Comparison":["whereas","while","in contrast","by contrast","twice as high as","three times as large as","the gap narrowed","the gap widened","the same proportion as","slightly higher than","considerably lower than"]};
+$("#bank").innerHTML=Object.entries(BANK).map(([k,v])=>`<h3>${k}</h3><div class="row">`+v.map(t=>`<button class="chip">${t}</button>`).join("")+`</div>`).join("");
+$("#bank").onclick=e=>{const c=e.target.closest(".chip");if(!c)return;const n=$("#notes");n.value+=(n.value&&!/\s$/.test(n.value)?" ":"")+c.textContent+" ";n.focus()};
+
+$("#ck").innerHTML=C.map((c,i)=>`<label><input type="checkbox" checked data-i="${i}"> <span class="dot" style="background:${COL[i]}"></span>${c}</label>`).join(" &nbsp; ");
+function bars(){
+  const s=[...$$("#ck input:checked")].map(x=>+x.dataset.i),n=s.length||1;let h="";
+  [0,20,40,60].forEach(v=>{const y=210-v/60*170;h+=`<line x1="40" x2="590" y1="${y}" y2="${y}" stroke="var(--bd)"/><text x="34" y="${y+4}" text-anchor="end" font-size="11" fill="var(--mut)">${v}%</text>`});
+  const w=Math.min(30,120/n);
+  Y.forEach((y,gi)=>{const x0=50+gi*138;h+=`<text x="${x0+60}" y="230" text-anchor="middle" font-size="13" fill="var(--fg)">${y}</text>`;
+    s.forEach((i,k)=>{const v=D[y][i],bh=v/60*170,x=x0+(120-w*n)/2+k*w;h+=`<rect x="${x}" y="${210-bh}" width="${w-2}" height="${bh}" fill="${COL[i]}"/><text x="${x+w/2-1}" y="${205-bh}" text-anchor="middle" font-size="10" fill="var(--fg)">${v}</text>`})});
+  $("#bars").innerHTML=h;trend();trHv(-1);
+}
+$("#ck").onchange=bars;
+$$("nav button").forEach(b=>b.onclick=()=>{$$("nav button").forEach(x=>x.classList.toggle("on",x==b));$$(".tab").forEach(t=>t.classList.toggle("on",t.id=="t-"+b.dataset.t))});
+draw();setHv(-1);bars();
+</script></main></body></html>
