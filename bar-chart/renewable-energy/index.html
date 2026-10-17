@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bar chart: average price per kilogram of clothing</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--ink:#1b2430;--mute:#5b6878;--line:#d8dde4;--accent:#2f5fb3;--g1:#a6c2ea;--g2:#35599f;--inc:#16a34a;--skp:#e11d48;--cmp:#f59e0b;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#10151c;--card:#19212b;--ink:#e8edf3;--mute:#9aa8b8;--line:#2d3a49;--accent:#7aa2e8;--g1:#5f83bd;--g2:#bcd3f6}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#10151c;--card:#19212b;--ink:#e8edf3;--mute:#9aa8b8;--line:#2d3a49;--accent:#7aa2e8;--g1:#5f83bd;--g2:#bcd3f6}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:860px;margin:0 auto;padding:18px 14px 40px}
+h1{font:600 24px/1.25 Georgia,"Times New Roman",serif;margin:0 0 4px}
+.task{color:var(--mute);margin:0 0 14px;max-width:70ch}
+.tabs{display:flex;gap:4px;border-bottom:2px solid var(--line);overflow-x:auto}
+.tab{background:none;border:0;color:var(--mute);font:600 15px inherit;font-family:inherit;padding:10px 14px;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap}
+.tab.on{color:var(--accent);border-bottom-color:var(--accent)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-top:12px}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:6px 0}
+.lbl{font-weight:600;margin-right:2px}
+.hint{color:var(--mute);font-size:13px;margin:4px 0}
+.b{background:var(--card);color:var(--ink);border:1.5px solid var(--line);border-radius:8px;padding:6px 11px;font:inherit;font-size:14px;cursor:pointer}
+.b:hover{border-color:var(--accent)}
+.b.on{background:var(--accent);border-color:var(--accent);color:#fff}
+:root[data-theme="dark"] .b.on{color:#10151c}
+.b.br{border-color:var(--c);border-width:2.5px;font-weight:600}
+.b.br.on{background:var(--c);color:#fff}
+.b:focus-visible,.tab:focus-visible,.lg:focus-visible,.chip:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+#lg{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:6px}
+.lg{display:flex;align-items:center;gap:7px;background:var(--card);color:var(--ink);border:1.5px solid var(--line);border-radius:999px;padding:4px 12px;font:inherit;font-size:14px;cursor:pointer}
+.lg i{width:14px;height:14px;border-radius:3px;display:inline-block}
+.lg.off{opacity:.4;text-decoration:line-through}
+.cw{position:relative}
+svg{width:100%;height:auto;display:block}
+.ax{fill:var(--mute);font:12px system-ui,sans-serif}
+.cat{fill:var(--ink);font:600 13px system-ui,sans-serif}
+.val{fill:var(--ink);font:600 12px system-ui,sans-serif}
+.tag{font:700 11px system-ui,sans-serif}
+svg rect[data-id]{cursor:pointer}
+#tip{display:none;position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);padding:5px 9px;border-radius:6px;font-size:13px;white-space:nowrap;z-index:5}
+.words{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px;margin-top:8px}
+.words label{display:flex;flex-direction:column;font-size:13px;font-weight:600;gap:2px}
+input,textarea{font:inherit;font-size:14px;background:var(--bg);color:var(--ink);border:1.5px solid var(--line);border-radius:7px;padding:6px 8px;width:100%;box-sizing:border-box}
+textarea{resize:vertical}
+#nw{display:none}
+#nw label{font-weight:600}
+table{border-collapse:collapse;margin:6px 0}
+td,th{border:1px solid var(--line);padding:5px 14px;text-align:left}
+th{background:var(--bg)}
+.grp{margin:8px 0 2px;font-weight:600;font-size:13px;color:var(--mute)}
+.chip{background:var(--bg);color:var(--ink);border:1.5px solid var(--line);border-radius:999px;padding:3px 11px;margin:3px 4px 3px 0;font:inherit;font-size:14px;cursor:pointer}
+.chip:hover{border-color:var(--accent)}
+.foot{color:var(--mute);font-size:12px;margin-top:10px}
+</style></head>
+<body><main>
+<h1>Average price per kilogram of clothing</h1>
+<p class="task">The chart compares the average cost per kilogram of clothing imported by the European Union from six major source countries in 1997 and 2003.</p>
+<div class="tabs" role="tablist">
+<button class="tab" data-a="tab" data-v="0">Explore</button>
+<button class="tab" data-a="tab" data-v="1">Key Features &amp; Notes</button>
+</div>
+<div class="card" id="pn"></div>
+<div class="card">
+<div id="lg"></div>
+<div class="cw"><svg id="svg" viewBox="0 0 700 380" role="img" aria-label="Grouped bar chart of clothing price per kilogram in 1997 and 2003 for six countries"></svg><div id="tip"></div></div>
+</div>
+<div class="card" id="nw"><label for="notes">Your notes</label>
+<textarea id="notes" rows="6" placeholder="Type key features, an overview and comparisons here..."></textarea></div>
+<p class="foot">Values were read from the chart, so treat them as approximate.</p>
+</main>
+<script>
+const $=s=>document.querySelector(s);
+const C=['Argentina','Brazil','Japan','China','India','Bangladesh'],Y=[1997,2003];
+const V={Argentina:[28.3,26.3],Brazil:[22.8,22.8],Japan:[15,13],China:[10,17],India:[7,12.3],Bangladesh:[3,6]};
+const CC={Argentina:'#4e79a7',Brazil:'#f28e2b',Japan:'#59a14f',China:'#e15759',India:'#b07aa1',Bangladesh:'#76b7b2'};
+const S={tab:0,mode:'country',order:C.slice(),hid:new Set(),hi:false,lab:false,est:false,rev:false,ref:null,brush:'inc',marks:{},sel:[],trend:false,tbl:false,notes:'',words:{}};
+const val=(c,y)=>V[c][Y.indexOf(+y)];
+const shown=()=>!S.est||S.rev;
+const BANK={'Comparing':['was considerably higher than','was noticeably lower than','was roughly double','was about half','was almost identical to','exceeded','was the same as'],
+'Contrast':['whereas','while','in contrast','by contrast','on the other hand','conversely','unlike'],
+'Change':['rose sharply','climbed steadily','fell slightly','remained unchanged','more than doubled','was virtually stable'],
+'Approximation':['approximately','just under','just over','roughly','around','slightly above','well below'],
+'Ranking':['the highest','the second highest','the lowest','ranked first','lay between']};
+function lay(){
+ const cats=S.mode=='country'?S.order:Y,ser=S.mode=='country'?Y:S.order;
+ const vs=ser.filter(s=>!S.hid.has(String(s)));
+ const W=700,H=380,L=58,R=30,T=24,B=48,pw=W-L-R,ph=H-T-B,cw=pw/cats.length,g=cw*.16,bw=vs.length?(cw-2*g)/vs.length:0,bars=[];
+ cats.forEach((cat,ci)=>vs.forEach((s,si)=>{const c=S.mode=='country'?cat:s,y=S.mode=='country'?s:cat,v=val(c,y);
+  bars.push({id:c+'|'+y,c,y,v,x:L+ci*cw+g+si*bw,w:bw,t:T+ph*(1-v/30),h:ph*v/30})}));
+ return{cats,ser,vs,W,H,L,R,T,B,pw,ph,cw,bars}}
+function chart(){
+ const m=lay(),bars=m.bars;
+ let o='<defs>'+[['up','#16a34a'],['dn','#dc2626'],['eq','#64748b']].map(([k,c])=>`<marker id="m${k}" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="${c}"/></marker>`).join('')+'</defs>';
+ for(let v=0;v<=30;v+=5){const y=m.T+m.ph*(1-v/30);o+=`<line x1="${m.L}" x2="${m.W-m.R}" y1="${y}" y2="${y}" stroke="var(--line)"/><text x="${m.L-8}" y="${y+4}" text-anchor="end" class="ax">${v}</text>`}
+ o+=`<text transform="translate(14 ${m.T+m.ph/2}) rotate(-90)" text-anchor="middle" class="ax">Cost in pounds (£)</text>`;
+ m.cats.forEach((c,i)=>o+=`<text x="${m.L+(i+.5)*m.cw}" y="${m.H-22}" text-anchor="middle" class="cat">${c}</text>`);
+ if(S.ref!=null){const y=m.T+m.ph*(1-S.ref/30);o+=`<line x1="${m.L}" x2="${m.W-m.R}" y1="${y}" y2="${y}" stroke="#e11d48" stroke-width="2" stroke-dasharray="7 4"/><text x="${m.W-m.R}" y="${y-5}" text-anchor="end" class="val" style="fill:#e11d48">≈ ${S.ref}</text>`}
+ if(!bars.length)return $('#svg').innerHTML=o;
+ const mx=Math.max(...bars.map(b=>b.v)),mn=Math.min(...bars.map(b=>b.v));
+ bars.forEach(b=>{
+  const fill=S.mode=='country'?(b.y==1997?'var(--g1)':'var(--g2)'):CC[b.c],mk=S.marks[b.id],si=S.sel.indexOf(b.id);
+  const st=mk?`stroke="var(--${mk})" stroke-width="5"`:si>=0?`stroke="var(--ink)" stroke-width="3" stroke-dasharray="5 3"`:'';
+  o+=`<rect data-id="${b.id}" x="${b.x}" y="${b.t}" width="${b.w}" height="${b.h}" fill="${fill}" ${st} rx="2"/>`;
+  const cx=b.x+b.w/2;let ty=b.t-5;
+  if(S.lab&&shown()){o+=`<text class="val" x="${cx}" y="${ty}" text-anchor="middle">${b.v}</text>`;ty-=15}
+  if(S.hi&&(b.v==mx||b.v==mn))o+=`<text class="tag" x="${cx}" y="${ty}" text-anchor="middle" style="fill:${b.v==mx?'#16a34a':'#dc2626'}">${b.v==mx?'Highest':'Lowest'}</text>`;
+  if(si>=0)o+=`<circle cx="${cx}" cy="${b.t+14}" r="10" fill="var(--ink)"/><text x="${cx}" y="${b.t+18}" text-anchor="middle" class="tag" style="fill:var(--bg)">${si+1}</text>`});
+ if(S.trend)C.forEach(c=>{const a=bars.find(b=>b.id==c+'|1997'),b=bars.find(b=>b.id==c+'|2003');if(!a||!b)return;
+  const d=b.v-a.v,k=d>.05?'up':d<-.05?'dn':'eq',col={up:'#16a34a',dn:'#dc2626',eq:'#64748b'}[k];
+  o+=`<line x1="${a.x+a.w/2}" y1="${a.t}" x2="${b.x+b.w/2}" y2="${b.t}" stroke="${col}" stroke-width="3" marker-end="url(#m${k})" style="pointer-events:none"/>`});
+ if(S.tab==2&&S.sel.length==2){const [p,q]=S.sel.map(i=>bars.find(b=>b.id==i));
+  if(p&&q){const xr=Math.max(p.x+p.w,q.x+q.w)+14;
+   o+=[p,q].map(b=>`<line x1="${b.x+b.w}" x2="${xr}" y1="${b.t}" y2="${b.t}" stroke="var(--ink)" stroke-dasharray="4 3" style="pointer-events:none"/>`).join('');
+   o+=`<line x1="${xr}" x2="${xr}" y1="${p.t}" y2="${q.t}" stroke="var(--ink)" stroke-width="3" style="pointer-events:none"/><text x="${xr+4}" y="${(p.t+q.t)/2+4}" class="tag" style="fill:var(--ink)">${Math.abs(p.t-q.t)<1?'same':'gap'}</text>`}}
+ $('#svg').innerHTML=o}
+function legend(){const m=lay();$('#lg').innerHTML=m.ser.map(s=>`<button class="lg${S.hid.has(String(s))?' off':''}" data-a="lg" data-v="${s}"><i style="background:${S.mode=='country'?(s==1997?'var(--g1)':'var(--g2)'):CC[s]}"></i>${s}</button>`).join('')}
+const tg=(l,a,on,v='')=>`<button class="b${on?' on':''}" data-a="${a}" data-v="${v}">${l}</button>`;
+function panel(){
+ if(S.tab==0)return `<div class="row">${tg('Swap grouping','swap',0)}<span class="hint">Grouped by <b>${S.mode}</b>. Click a legend item to show or hide it.</span></div>
+ <div class="row"><span class="lbl">Sort</span>${[1997,2003].map(y=>tg(`${y} high → low`,'sort',0,y+',-1')).join('')}${tg('Reset order','sort',0,'0')}</div>
+ <div class="row">${tg('Highest / lowest','hi',S.hi)}${tg('Value labels','lab',S.lab)}</div>
+ <p class="hint">Hover over a bar to read its value.</p>`;
+ if(S.tab==1)return `<div class="row"><span class="lbl">Highlight</span>${[['inc','Include'],['skp','Skip'],['cmp','Compare']].map(([k,n])=>`<button class="b br${S.brush==k?' on':''}" style="--c:var(--${k})" data-a="brush" data-v="${k}">${n}</button>`).join('')}${tg('Erase','brush',S.brush=='x','x')}${tg('Clear all','clearmarks',0)}</div>
+ <p class="hint">Choose a colour, then click bars. Include = key feature, Skip = leave out, Compare = bars to compare.</p>
+ <div class="lbl" style="margin-top:8px">Phrase bank <span class="hint">(click to add to your notes)</span></div>
+ ${Object.entries(BANK).map(([g,a])=>`<div class="grp">${g}</div>${a.map(p=>`<button class="chip" data-a="word" data-v="${p}">${p}</button>`).join('')}`).join('')}`}
+function all(){legend();chart();$('#pn').innerHTML=panel();
+ document.querySelectorAll('.tab').forEach((t,i)=>{t.classList.toggle('on',i==S.tab);t.setAttribute('aria-selected',i==S.tab)});
+ $('#nw').style.display=S.tab?'block':'none';$('#tip').style.display='none'}
+document.addEventListener('click',e=>{const el=e.target.closest('[data-a]');if(!el)return;const a=el.dataset.a,v=el.dataset.v;
+ if(a=='tab')S.tab=+v;
+ else if(a=='lg'){S.hid.has(v)?S.hid.delete(v):S.hid.add(v)}
+ else if(a=='swap'){S.mode=S.mode=='country'?'year':'country';S.hid.clear();S.sel=[]}
+ else if(a=='sort'){if(v=='0')S.order=C.slice();else{const[y,d]=v.split(',').map(Number);S.order.sort((p,q)=>d*(val(p,y)-val(q,y)))}}
+ else if(a=='hi')S.hi=!S.hi;
+ else if(a=='lab')S.lab=!S.lab;
+ else if(a=='est'){S.est=!S.est;S.rev=false}
+ else if(a=='rev')S.rev=!S.rev;
+ else if(a=='clearref')S.ref=null;
+ else if(a=='brush')S.brush=v;
+ else if(a=='clearmarks')S.marks={};
+ else if(a=='trend')S.trend=!S.trend;
+ else if(a=='clearsel')S.sel=[];
+ else if(a=='tbl')S.tbl=!S.tbl;
+ else if(a=='word'){S.notes+=(S.notes&&!/\s$/.test(S.notes)?' ':'')+v+' ';$('#notes').value=S.notes}
+ all()});
+$('#svg').addEventListener('click',e=>{const id=e.target.dataset&&e.target.dataset.id;
+ if(S.tab==1&&id){S.brush=='x'?delete S.marks[id]:S.marks[id]=S.brush}
+ all()});
+$('#svg').addEventListener('mousemove',e=>{const id=e.target.dataset&&e.target.dataset.id,t=$('#tip');
+ if(!id){t.style.display='none';return}
+ const[c,y]=id.split('|'),w=$('.cw').getBoundingClientRect();
+ t.innerHTML=`<b>${c}</b> · ${y}<br>`+(shown()?'£'+val(c,y):'Estimate the value');
+ t.style.display='block';t.style.left=(e.clientX-w.left+12)+'px';t.style.top=(e.clientY-w.top-10)+'px'});
+$('#svg').addEventListener('mouseleave',()=>$('#tip').style.display='none');
+$('#notes').addEventListener('input',e=>S.notes=e.target.value);
+$('#pn').addEventListener('input',e=>{if(e.target.dataset.w)S.words[e.target.dataset.w]=e.target.value});
+all();
+</script></body></html>
